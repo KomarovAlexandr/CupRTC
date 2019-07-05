@@ -176,7 +176,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -427,6 +427,21 @@
               <FileName>ws2812b.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\main\ws2812b.c</FilePath>
+            </File>
+            <File>
+              <FileName>Delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\Delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>Lcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\Lcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>ws2812b_modes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\ws2812b_modes.c</FilePath>
             </File>
           </Files>
         </Group>

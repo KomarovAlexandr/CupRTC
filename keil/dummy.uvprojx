@@ -333,7 +333,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
-              <Define>STM32F103xB, USE_FULL_ASSERT, USE_STDPERIPH_DRIVER, STM32F10X_MD, HSE_VALUE=8000000</Define>
+              <Define>STM32F103xB, USE_FULL_ASSERT, USE_STDPERIPH_DRIVER, STM32F10X_MD, HSE_VALUE=12000000</Define>
               <Undefine></Undefine>
               <IncludePath>.\src\cmsis;.\src;.\src\mcu_support_package\inc;.\src\spl\inc;.\src\spl</IncludePath>
             </VariousControls>
@@ -388,6 +388,16 @@
               <FileName>ws2812b.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\main\ws2812b.c</FilePath>
+            </File>
+            <File>
+              <FileName>Delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\Delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>Lcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\Lcd.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -1,48 +1,71 @@
 #include "mcu_support_package/inc/stm32f10x.h"
 #include "ws2812b.h"
+#include "ws2812b_modes.h"
+#include "Lcd.h"
+#include "Delay.h"
+#include <stdint.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-void HSV_to_RGB(int hue, int sat, int val, uint8_t *rc, uint8_t *gc, uint8_t *bc) ;
- 
+#define Number_of_Led_modes 2
+struct rgb_struct rgb;
+void InitButtom(void);
+void Turn_on_Led_mode(uint8_t mode);
+uint8_t Led_mode = 0;
+uint8_t Led_mass_now[WS2812B_NUM_LEDS * 3] = {0};
+uint8_t Led_mass[WS2812B_NUM_LEDS * 3] = {0};
+
 int main()
 {
-  uint8_t rc;
-  uint8_t gc;
-  uint8_t bc;
-  
-  ws2812b_init();
-  while(!ws2812b_is_ready())
-    ;
-  
-  
-  for(int i=0; i<WS2812B_NUM_LEDS; i++) 
-  {
- 
-    HSV_to_RGB((int)(i*360/WS2812B_NUM_LEDS), 255, 100, &rc, &gc, &bc);
-    ws2812b_set(i, rc, gc, bc);
-  }
-  
-  //Выводим буфер
-  ws2812b_send();
- 
-  for(;;)
-  {
-  }
-  
+	Delay_Init();
+	delay_ms(100);
+	LCD_Init();
+	ws2812b_init();
+	InitButtom();
+	srand(1);
+	
+	ClearLCDScreen();
+	PrintStr("Dratuti");
+	Cursor(1, 0);
+	PrintStr("Ya rodilsya!"); 
+	
+	uint8_t Old_Led_Mode = Led_mode;
+	int H = 0;
+	int S = 0;
+	int V = 0;
+	while(1){
+		Turn_on_Led_mode(Led_mode);
+	}
 }
 
+void InitButtom(void){
+	RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
+	GPIO_InitTypeDef ResetButtom;
+	ResetButtom.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+	ResetButtom.GPIO_Pin = GPIO_Pin_1;
+	ResetButtom.GPIO_Speed = GPIO_Speed_10MHz;
+	GPIO_Init( GPIOA, &ResetButtom);
+	
+	EXTI->IMR |= EXTI_IMR_MR1;
+	EXTI->RTSR |= EXTI_RTSR_TR1;
+	NVIC_EnableIRQ (EXTI1_IRQn);
+}
 
-
-
-
-
-
+void EXTI1_IRQHandler(void)
+{
+	NVIC_DisableIRQ (EXTI1_IRQn);
+	EXTI->PR|=0x02;
+	delay_ms(50);
+	Led_mode ++;
+	if(Led_mode > Number_of_Led_modes) Led_mode = 0;
+	//SCB -> AIRCR = 0x05FA0004;  //если мы хотим перезагрузку по кнопке
+	NVIC_EnableIRQ (EXTI1_IRQn);
+}
 
 // В Project->Options->Linker, Scatter File выбран файл stack_protection.sct
 // он обеспечивает падение в HardFault при переполнении стека
 // Из-за этого может выдаваться ложное предупреждение "AppData\Local\Temp\p2830-2(34): warning:  #1-D: last line of file ends without a newline"
-
 #ifdef USE_FULL_ASSERT
-
 // эта функция вызывается, если assert_param обнаружил ошибку
 void assert_failed(uint8_t * file, uint32_t line)
 { 
@@ -61,5 +84,4 @@ void assert_failed(uint8_t * file, uint32_t line)
         __BKPT(0xAB);
     }
 }
-
 #endif

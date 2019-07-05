@@ -1,0 +1,159 @@
+#include "Lcd.h"
+#include "Delay.h"
+
+#define			LCM_OUT_A						GPIOA->ODR
+#define			LCM_OUT_B						GPIOB->ODR
+#define			LCM_PIN_RS					GPIO_Pin_10					//PA10
+#define			LCM_PIN_EN					GPIO_Pin_11					//PA11
+#define			LCM_PIN_D7					GPIO_Pin_4					//PB4
+#define			LCM_PIN_D6					GPIO_Pin_3					//PB3
+#define			LCM_PIN_D5					GPIO_Pin_15					//PA15
+#define			LCM_PIN_D4					GPIO_Pin_12					//PA12
+#define			LCM_PIN_MASK_A	(LCM_PIN_RS | LCM_PIN_EN | LCM_PIN_D5 | LCM_PIN_D4)
+#define			LCM_PIN_MASK_B	(LCM_PIN_D7 | LCM_PIN_D6)
+
+//---Импульс на ноге Е для записи дисплеем заданных параметров---//
+void PulseLCD()
+{
+	LCM_OUT_A |= LCM_PIN_EN;
+	delay_us(2);
+	LCM_OUT_A &= (~LCM_PIN_EN);
+}
+ 
+//---Отсылка байта в дисплей---//
+void SendByte(char ByteToSend, int IsData)
+{
+	LCM_OUT_A &= ~(LCM_PIN_MASK_A);
+	LCM_OUT_B &= ~(LCM_PIN_MASK_B);
+	LCM_OUT_A |= ((ByteToSend & 0x10)) << 8;
+	LCM_OUT_A |= ((ByteToSend & 0x20)) << 10;
+	LCM_OUT_B |= ((ByteToSend & 0xC0)) >> 3;
+	if (IsData == 1){
+		LCM_OUT_A |= LCM_PIN_RS;
+		delay_us(4);
+	}
+	else{
+		LCM_OUT_A &= ~LCM_PIN_RS;	
+		delay_us(4);
+	}
+	PulseLCD();
+	delay_us(5);
+	
+	LCM_OUT_A &= ~(LCM_PIN_MASK_A);
+	LCM_OUT_B &= ~(LCM_PIN_MASK_B);	
+	LCM_OUT_A |= ((ByteToSend & 0x1)) << 12;
+	LCM_OUT_A |= ((ByteToSend & 0x2)) << 14;
+	LCM_OUT_B |= ((ByteToSend & 0xC)) << 1;
+	if (IsData == 1)
+			LCM_OUT_A |= LCM_PIN_RS;
+	else
+			LCM_OUT_A &= ~LCM_PIN_RS;
+	PulseLCD();
+	delay_ms(5);
+	
+	LCM_OUT_A &= ~(LCM_PIN_MASK_A);
+	LCM_OUT_B &= ~(LCM_PIN_MASK_B);	
+}
+ 
+//---Установка позиции курсора---//
+void Cursor(char Row, char Col)
+{
+	char address;
+	if (Row == 0)
+		address = 0;
+	else
+	address = 0x40;
+	address |= Col;
+	SendByte(0x80 | address, 0);
+}
+ 
+//---Очистка дисплея---//
+void ClearLCDScreen()
+{
+	SendByte(0x01, 0);
+	delay_ms(3);
+}
+//---Инициализация дисплея---//
+void LCD_Init(void)
+{
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
+	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable, ENABLE);
+	
+	GPIO_InitTypeDef LcdWriteA;
+	GPIO_InitTypeDef LcdWriteB;
+	
+	LcdWriteA.GPIO_Pin = (LCM_PIN_EN | LCM_PIN_RS | LCM_PIN_D5 | LCM_PIN_D4);
+	LcdWriteA.GPIO_Mode = GPIO_Mode_Out_PP;
+	LcdWriteA.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOA, &LcdWriteA);
+
+	LcdWriteB.GPIO_Pin = (LCM_PIN_D6 | LCM_PIN_D7);
+	LcdWriteB.GPIO_Mode = GPIO_Mode_Out_PP;
+	LcdWriteB.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOB, &LcdWriteB);
+	
+	delay_ms(20);
+	LCM_OUT_A &= ~(LCM_PIN_MASK_A);
+	LCM_OUT_B &= ~(LCM_PIN_MASK_B);
+	
+	LCM_OUT_A &= ~LCM_PIN_RS;  //отправка 0011 (8битный интерфейс)
+	LCM_OUT_A &= ~LCM_PIN_EN;
+	LCM_OUT_A |= 0x9000;
+	LCM_OUT_B |= 0x0000;
+	PulseLCD();
+	delay_ms(5);
+	PulseLCD();
+	delay_ms(5);
+	LCM_OUT_A &= ~(LCM_PIN_MASK_A);
+	LCM_OUT_B &= ~(LCM_PIN_MASK_B);
+	
+	LCM_OUT_A |= 0x8000;       //отправка 0010 (4битный интерфейс), несколько раз
+	LCM_OUT_B |= 0x000;
+	PulseLCD();
+	delay_us(10);
+	
+	LCM_OUT_A &= ~(LCM_PIN_MASK_A);
+	LCM_OUT_B &= ~(LCM_PIN_MASK_B);
+	LCM_OUT_A |= 0x8000;
+	LCM_OUT_B |= 0x000;
+	PulseLCD();
+	delay_ms(5);
+	LCM_OUT_A &= ~(LCM_PIN_MASK_A);
+	LCM_OUT_B &= ~(LCM_PIN_MASK_B);
+	
+	SendByte(0x28, 0);      //
+	SendByte(0x06, 0);      //
+	SendByte(0x14, 0);      //
+	SendByte(0x0E, 0);      //
+}
+ 
+//---Печать строки---//
+void PrintStr(char *Text)
+{	
+	char *c;
+	c = Text;
+	while ((c != 0) && (*c != 0))
+	{
+			SendByte(*c, 1);
+			c++;
+	}
+}
+//---Печать переменной---//
+void PrintVar(int y)
+{	
+	char str[10];
+	sprintf (str, "%d", y);
+	char *c = str;
+	PrintStr(c);
+}
+//---Зачистка куска дисплея---//
+void Cleaning (int row, int col, int number)
+{
+	Cursor(row, col);
+	for(int i = 0; i < number; i++){
+		SendByte(' ', 1);
+	}
+}
+
