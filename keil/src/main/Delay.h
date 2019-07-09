@@ -3,9 +3,11 @@
 #include "stm32f10x_rcc.h"
 #include "stm32f10x_tim.h"
 
-void Delay_Init(void);
+#define MS_PRSC 7200
+#define US_PRSC 72
 
-void delay_us(int delay);
+void Delay_Init(void);      //Инициализация
 
-void delay_ms(int delay);
+void delay_us(int delay);   //Задержка в микросекундах
 
+void delay_ms(int delay);   //Задержка в миллисекундках

@@ -14,7 +14,7 @@ void Turn_on_Led_mode(uint8_t mode);
 uint8_t Led_mode = 0;
 uint8_t Led_mass_now[WS2812B_NUM_LEDS * 3] = {0};
 uint8_t Led_mass[WS2812B_NUM_LEDS * 3] = {0};
-
+extern uint8_t RUS[33];
 int main()
 {
 	Delay_Init();
@@ -25,14 +25,10 @@ int main()
 	srand(1);
 	
 	ClearLCDScreen();
-	PrintStr("Dratuti");
+	Cursor(0, 0);
+	PrintStr("Куку kuku");
 	Cursor(1, 0);
-	PrintStr("Ya rodilsya!"); 
-	
-	uint8_t Old_Led_Mode = Led_mode;
-	int H = 0;
-	int S = 0;
-	int V = 0;
+	PrintStr("Pечаtaю kak hoчу");
 	while(1){
 		Turn_on_Led_mode(Led_mode);
 	}

@@ -399,6 +399,11 @@
               <FileType>1</FileType>
               <FilePath>.\src\main\Lcd.c</FilePath>
             </File>
+            <File>
+              <FileName>ws2812b_modes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\ws2812b_modes.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

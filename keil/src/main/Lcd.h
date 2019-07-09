@@ -2,8 +2,9 @@
 #include "stm32f10x.h"
 #include "stm32f10x_gpio.h"
 #include "stm32f10x_rcc.h"
+#include "Delay.h"
 #include "stdlib.h"
-#include <stdio.h>
+#include "stdio.h"
 
 void PulseLCD(void);                          //Импульс на ноге Е для записи дисплеем заданных параметров
  
@@ -20,3 +21,5 @@ void PrintStr(char *Text);                    //Печать строки
 void PrintVar(int x);                         //Печать переменной
 
 void Cleaning (int row, int col, int number); //Очистка куска дисплея
+
+//void PrintStrRus(char *Text);
