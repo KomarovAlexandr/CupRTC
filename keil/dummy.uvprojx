@@ -332,10 +332,10 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--c99</MiscControls>
-              <Define>STM32F103xB, USE_FULL_ASSERT, USE_STDPERIPH_DRIVER, STM32F10X_MD, HSE_VALUE=12000000</Define>
+              <MiscControls>--c99 --feedback=unused</MiscControls>
+              <Define>STM32F103xB, USE_FULL_ASSERT, USE_STDPERIPH_DRIVER, STM32F10X_MD, HSE_VALUE=12000000, HAVE_CONFIG_H</Define>
               <Undefine></Undefine>
-              <IncludePath>.\src\cmsis;.\src;.\src\mcu_support_package\inc;.\src\spl\inc;.\src\spl</IncludePath>
+              <IncludePath>.\src\cmsis;.\src;.\src\mcu_support_package\inc;.\src\spl\inc;.\src\spl;.\src\main\STM32F10x_Speex_Lib\include;.\src\main\STM32F10x_Speex_Lib\libspeex;.\src\main\STM32F10x_Speex_Lib\STM32;.\src\main\STM32F10x_Speex_Lib\STM32\libspeex;.\src\main\STM32F10x_Speex_Lib\STM32\include;.\src\main\STM32F10x_Speex_Lib\STM32\libspeex\arm</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -369,7 +369,7 @@
             <ScatterFile>.\stack_protection.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc></Misc>
+            <Misc>--feedback=unused</Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings></DisabledWarnings>
           </LDads>
@@ -404,10 +404,88 @@
               <FileType>1</FileType>
               <FilePath>.\src\main\ws2812b_modes.c</FilePath>
             </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>Spx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\Spx.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>mcu_support_package</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>2</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>2</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <uClangAs>2</uClangAs>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
           <Files>
             <File>
               <FileName>system_stm32f10x.c</FileName>
@@ -423,6 +501,74 @@
         </Group>
         <Group>
           <GroupName>spl</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>2</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>2</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <uClangAs>2</uClangAs>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
           <Files>
             <File>
               <FileName>misc.c</FileName>
@@ -448,6 +594,189 @@
               <FileName>stm32f10x_tim.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\spl\src\stm32f10x_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\spl\src\stm32f10x_spi.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>libspeex</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>2</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>2</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>0</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <useXO>2</useXO>
+                <v6Lang>0</v6Lang>
+                <v6LangP>0</v6LangP>
+                <vShortEn>2</vShortEn>
+                <vShortWch>2</vShortWch>
+                <v6Lto>2</v6Lto>
+                <v6WtE>2</v6WtE>
+                <v6Rtti>2</v6Rtti>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <uClangAs>2</uClangAs>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+          <Files>
+            <File>
+              <FileName>bits.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\STM32F10x_Speex_Lib\libspeex\bits.c</FilePath>
+            </File>
+            <File>
+              <FileName>buffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\STM32F10x_Speex_Lib\libspeex\buffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>exc_10_32_table.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\STM32F10x_Speex_Lib\libspeex\exc_10_32_table.c</FilePath>
+            </File>
+            <File>
+              <FileName>gain_table.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\STM32F10x_Speex_Lib\libspeex\gain_table.c</FilePath>
+            </File>
+            <File>
+              <FileName>gain_table_lbr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\STM32F10x_Speex_Lib\libspeex\gain_table_lbr.c</FilePath>
+            </File>
+            <File>
+              <FileName>high_lsp_tables.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\STM32F10x_Speex_Lib\libspeex\high_lsp_tables.c</FilePath>
+            </File>
+            <File>
+              <FileName>lpc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\STM32F10x_Speex_Lib\libspeex\lpc.c</FilePath>
+            </File>
+            <File>
+              <FileName>lsp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\STM32F10x_Speex_Lib\libspeex\lsp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lsp_tables_nb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\STM32F10x_Speex_Lib\libspeex\lsp_tables_nb.c</FilePath>
+            </File>
+            <File>
+              <FileName>speex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\STM32F10x_Speex_Lib\libspeex\speex.c</FilePath>
+            </File>
+            <File>
+              <FileName>speex_callbacks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\STM32F10x_Speex_Lib\libspeex\speex_callbacks.c</FilePath>
+            </File>
+            <File>
+              <FileName>speex_header.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\STM32F10x_Speex_Lib\libspeex\speex_header.c</FilePath>
+            </File>
+            <File>
+              <FileName>cb_search.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\STM32F10x_Speex_Lib\STM32\libspeex\cb_search.c</FilePath>
+            </File>
+            <File>
+              <FileName>filters.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\STM32F10x_Speex_Lib\STM32\libspeex\filters.c</FilePath>
+            </File>
+            <File>
+              <FileName>ltp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\STM32F10x_Speex_Lib\STM32\libspeex\ltp.c</FilePath>
+            </File>
+            <File>
+              <FileName>modes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\STM32F10x_Speex_Lib\STM32\libspeex\modes.c</FilePath>
+            </File>
+            <File>
+              <FileName>nb_celp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\STM32F10x_Speex_Lib\STM32\libspeex\nb_celp.c</FilePath>
+            </File>
+            <File>
+              <FileName>quant_lsp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\STM32F10x_Speex_Lib\STM32\libspeex\quant_lsp.c</FilePath>
+            </File>
+            <File>
+              <FileName>vq.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\STM32F10x_Speex_Lib\STM32\libspeex\vq.c</FilePath>
+            </File>
+            <File>
+              <FileName>window.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\STM32F10x_Speex_Lib\libspeex\window.c</FilePath>
+            </File>
+            <File>
+              <FileName>os_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\STM32F10x_Speex_Lib\libspeex\os_support.c</FilePath>
             </File>
           </Files>
         </Group>

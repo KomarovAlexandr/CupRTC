@@ -1,18 +1,19 @@
-#include "stm32f10x.h"
 #include "ws2812b.h"
-#include "ws2812b_config.h"
-#include <stm32f10x.h>
-#include <stm32f10x_rcc.h>
-#include <stm32f10x_gpio.h>
-#include <stm32f10x_tim.h>
-#include <stm32f10x_dma.h>
-#include <misc.h>
+
+//Передача лог. нуля 0.4мкс
+#define WS2812B_0_VAL						(WS2812B_TIMER_AAR / 3)
+//Передача лог. единицы 0.85мкс
+#define WS2812B_1_VAL 					((WS2812B_TIMER_AAR / 3) * 2)
+//Сигнал RET или RESET более 50мкс
+#define WS2812B_TIMER_RET				(WS2812B_TIMER_AAR * 45)
+
 
 #define GPIO_CRL_CNFx						GPIO_CRL_CNF6
 #define GPIO_CRL_CNFx_1					GPIO_CRL_CNF6_1
 #define GPIO_CRL_MODEx_1				GPIO_CRL_MODE6_1
 #define GPIO_CRL_MODEx_0				GPIO_CRL_MODE6_0
 
+#define TIM											TIM3
 #define TIM_CCER_CCxE						TIM_CCER_CC1E
 #define TIM_CCER_CCxP						TIM_CCER_CC1P
 
@@ -40,44 +41,38 @@
 
 static uint8_t led_array[DATA_LEN];
 static int flag_rdy = 0;
-extern struct rgb_struct rgb;
+extern volatile struct rgb_struct rgb;
 static void bus_retcode(void);
 
 void ws2812b_init(void)
 {
 	flag_rdy = 0;
-	
 	//Разрешаем такирование переферии
-	RCC->APB2ENR 	|= RCC_APB2ENR_IOPAEN; //Включаем тактирование порта GPIOA
-	RCC->APB1ENR	|= RCC_APB1ENR_TIM3EN; //таймера TIM3
-	RCC->AHBENR		|= RCC_AHBENR_DMA1EN;   //и DMA1
+	RCC->APB2ENR 	|= RCC_APB2ENR_IOPAEN;
+	RCC->APB1ENR	|= RCC_APB1ENR_TIM3EN;
+	RCC->AHBENR		|= RCC_AHBENR_DMA1EN;
 	
 	/********* Настраиваем PA6 *********/
 	//PA6 freq=10Mhz, AF output Push-pull
 	GPIOA->CRL &= ~(GPIO_CRL_CNFx);
 	GPIOA->CRL |= GPIO_CRL_CNFx_1 | GPIO_CRL_MODEx_1 | GPIO_CRL_MODEx_0;
-	
 	/********* Настойка таймера TIM3 *********/
 	//Разрешаем таймеру управлять выводом PA6
-	TIM3->CCER |= TIM_CCER_CCxE;    //Разрешаем
-	
-	TIM3->CCER &= ~(TIM_CCER_CCxP);
-	
-	TIM3->CCMRx &= ~(TIM_CCMRy_OCxM); //сбрасываем все биты OCxM
+	TIM->CCER |= TIM_CCER_CCxE;    //Разрешаем
+	TIM->CCER &= ~(TIM_CCER_CCxP);
+	TIM->CCMRx &= ~(TIM_CCMRy_OCxM); //сбрасываем все биты OCxM
 	
 	//устанавливаем выход в неактивное состояние
-	TIM3->CCMRx |= TIM_CCMRy_OCxM_2; 
-	TIM3->CCMRx &= ~(TIM_CCMRy_OCxM_2);
+	TIM->CCMRx |= TIM_CCMRy_OCxM_2; 
+	TIM->CCMRx &= ~(TIM_CCMRy_OCxM_2);
 	
-	TIM3->CCMRx |= TIM_CCMRy_OCxM_2 | TIM_CCMRy_OCxM_1 | TIM_CCMRy_OCxPE; //режим ШИМ-а
-	
-	TIM3->CR1 |= TIM_CR1_ARPE;    //Регистры таймера с буферизацией
-	TIM3->DIER |= TIM_DIER_CCxDE; //Разрешить запрос DMA
+	TIM->CCMRx |= TIM_CCMRy_OCxM_2 | TIM_CCMRy_OCxM_1 | TIM_CCMRy_OCxPE; //режим ШИМ-а
+	TIM->CR1 |= TIM_CR1_ARPE;    //Регистры таймера с буферизацией
+	TIM->DIER |= TIM_DIER_CCxDE; //Разрешить запрос DMA
 	
 	//Настраиваем канал DMA
-	DMA1_Channelx->CPAR = (uint32_t)(&TIM3->CCRx); //Куда пишем
+	DMA1_Channelx->CPAR = (uint32_t)(&TIM->CCRx); //Куда пишем
 	DMA1_Channelx->CMAR = (uint32_t)(led_array); //откуда берем
-	
 	DMA1_Channelx->CCR = DMA_CCR6_PSIZE_0 //регистр переферии 16 бит
 			| DMA_CCR6_MINC //режим инкремента указателя памяти
 			| DMA_CCR6_DIR; //напревление передачи из памяти в переферию
@@ -86,11 +81,11 @@ void ws2812b_init(void)
 	NVIC_EnableIRQ(TIM3_IRQn); //от таймера
 	NVIC_EnableIRQ(DMA1_Channelx_IRQn); //от DMA
 	
-	ws2812b_buff_claer();
+	ws2812b_buff_clear();
 	bus_retcode(); //сбрасываем шину
 }
 
-void ws2812b_buff_claer(void)
+void ws2812b_buff_clear(void)
 {
 	for(int i = 0; i < DATA_LEN; i++)
 		led_array[i] = WS2812B_0_VAL;
@@ -157,10 +152,10 @@ int ws2812b_send(void)
 		//Таймер считает до WS2812B_TIMER_AAR, таким образом
 		//при данной частоте тактирования таймера
 		//получаем период ШИМ-сигнала, равный 1.25мкс
-		TIM3->ARR = WS2812B_TIMER_AAR;
-		TIM3->CCRx = 0x0000; //Устанавливаем ШИМ-регистр таймера в ноль
-		TIM3->CNT = 0; //Очищаем счетный регистр
-		TIM3->CR1 |= TIM_CR1_CEN; //Запускаем таймер
+		TIM->ARR = WS2812B_TIMER_AAR;
+		TIM->CCRx = 0x0000; //Устанавливаем ШИМ-регистр таймера в ноль
+		TIM->CNT = 0; //Очищаем счетный регистр
+		TIM->CR1 |= TIM_CR1_CEN; //Запускаем таймер
 		//Так как значение ШИМ установили в ноль, 
 		//то на шине будет установлен неактивный уровень
 		//до момента запуска DMA  
@@ -180,7 +175,6 @@ int ws2812b_send(void)
 	}
 }
 
-
 int ws2812b_is_ready(void)
 {
 	return flag_rdy;
@@ -188,13 +182,13 @@ int ws2812b_is_ready(void)
 
 static void bus_retcode(void)
 {
-	TIM3->CR1 &= ~(TIM_CR1_CEN); //останавливаем таймер
-	TIM3->ARR = WS2812B_TIMER_RET; //Устанавливаем период немного больше 50мкс
-	TIM3->CNT = 0; //Очищаем счетный регистр
-	TIM3->CCRx = 0x0000; //значение ШИМ-а ноль
-	TIM3->SR &= ~(TIM_SR_UIF); //сбрасываем флаг прерывания
-	TIM3->DIER |= TIM_DIER_UIE; //прерывание по обновлению
-	TIM3->CR1 |= TIM_CR1_CEN; //Поехали считать!
+	TIM->CR1 &= ~(TIM_CR1_CEN); //останавливаем таймер
+	TIM->ARR = WS2812B_TIMER_RET; //Устанавливаем период немного больше 50мкс
+	TIM->CNT = 0; //Очищаем счетный регистр
+	TIM->CCRx = 0x0000; //значение ШИМ-а ноль
+	TIM->SR &= ~(TIM_SR_UIF); //сбрасываем флаг прерывания
+	TIM->DIER |= TIM_DIER_UIE; //прерывание по обновлению
+	TIM->CR1 |= TIM_CR1_CEN; //Поехали считать!
 }
 
 //Прерывание от DMA
@@ -223,15 +217,15 @@ void DMA1_Channelx_IRQHandler(void)
 //сигнала RET шины ws2812b
 void TIM3_IRQHandler(void)
 {
-	TIM3->SR = 0; //Сбрасываем все флаги прерываний
+	TIM->SR = 0; //Сбрасываем все флаги прерываний
 
 	//Итак, мы завершили формирование сигнала RET на шине
 	//и теперь можно сделать все завершающие операции 
 	//и установить флаг готовности интерфейса к следующей
 	//передаче данных.
 
-	TIM3->CR1 &= ~(TIM_CR1_CEN); //останавливаем таймер
-	TIM3->DIER &= ~(TIM_DIER_UIE); //запрещаем прерывание таймера
+	TIM->CR1 &= ~(TIM_CR1_CEN); //останавливаем таймер
+	TIM->DIER &= ~(TIM_DIER_UIE); //запрещаем прерывание таймера
 
 	flag_rdy = 1;
 }

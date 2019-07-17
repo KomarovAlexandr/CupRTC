@@ -1,10 +1,13 @@
+#ifndef LCD_H
+#define LCD_H
+
 #include "mcu_support_package/inc/stm32f10x.h"
 #include "stm32f10x.h"
 #include "stm32f10x_gpio.h"
-#include "stm32f10x_rcc.h"
 #include "Delay.h"
 #include "stdlib.h"
 #include "stdio.h"
+#include "string.h"
 
 void PulseLCD(void);                          //Импульс на ноге Е для записи дисплеем заданных параметров
  
@@ -22,4 +25,4 @@ void PrintVar(int x);                         //Печать переменно�
 
 void Cleaning (int row, int col, int number); //Очистка куска дисплея
 
-//void PrintStrRus(char *Text);
+#endif

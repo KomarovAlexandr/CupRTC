@@ -1,26 +1,23 @@
 #include "mcu_support_package/inc/stm32f10x.h"
-#include "ws2812b.h"
-#include "ws2812b_modes.h"
-#include "Lcd.h"
+
 #include "Delay.h"
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
 
-#define Number_of_Led_modes 2
-struct rgb_struct rgb;
-void InitButtom(void);
-void Turn_on_Led_mode(uint8_t mode);
-uint8_t Led_mode = 0;
-uint8_t Led_mass_now[WS2812B_NUM_LEDS * 3] = {0};
-uint8_t Led_mass[WS2812B_NUM_LEDS * 3] = {0};
-extern uint8_t RUS[33];
+#include "Prj_config.h"
+#include "voice.h"
+
+extern uint8_t Led_mode;
+
 int main()
 {
 	Delay_Init();
 	delay_ms(100);
 	LCD_Init();
 	ws2812b_init();
+	//Speex_Init();
+
 	InitButtom();
 	srand(1);
 	
@@ -29,33 +26,14 @@ int main()
 	PrintStr("Куку kuku");
 	Cursor(1, 0);
 	PrintStr("Pечаtaю kak hoчу");
-	while(1){
+
+	 
+  while(1) 
+  {
+		//play_message(&spx_1[0],spx_frame1);
+		//delay_ms(1000);
 		Turn_on_Led_mode(Led_mode);
-	}
-}
-
-void InitButtom(void){
-	RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
-	GPIO_InitTypeDef ResetButtom;
-	ResetButtom.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-	ResetButtom.GPIO_Pin = GPIO_Pin_1;
-	ResetButtom.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_Init( GPIOA, &ResetButtom);
-	
-	EXTI->IMR |= EXTI_IMR_MR1;
-	EXTI->RTSR |= EXTI_RTSR_TR1;
-	NVIC_EnableIRQ (EXTI1_IRQn);
-}
-
-void EXTI1_IRQHandler(void)
-{
-	NVIC_DisableIRQ (EXTI1_IRQn);
-	EXTI->PR|=0x02;
-	delay_ms(50);
-	Led_mode ++;
-	if(Led_mode > Number_of_Led_modes) Led_mode = 0;
-	//SCB -> AIRCR = 0x05FA0004;  //если мы хотим перезагрузку по кнопке
-	NVIC_EnableIRQ (EXTI1_IRQn);
+  }
 }
 
 // В Project->Options->Linker, Scatter File выбран файл stack_protection.sct
