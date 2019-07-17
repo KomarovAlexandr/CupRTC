@@ -12,4 +12,5 @@
 ## Тактирование проекта
 В случае если будет использоваться внешний кварц не равный 12МГц, то нужно изменить настройки тактирования:
 1. В файле system_stm32f10x.c нужно изменить множитель для PLL. Находится необходимый множитель в строке №1056. 
-![alt text](C:/Users/al.kom/Desktop/1.png)
+***
+![](https://github.com/KomarovAlexandr/Photo_repository/blob/master/CupRTC/1.png?raw=true)
