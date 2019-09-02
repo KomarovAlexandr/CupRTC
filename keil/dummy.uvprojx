@@ -414,6 +414,11 @@
               <FileType>1</FileType>
               <FilePath>.\src\main\Spx.c</FilePath>
             </File>
+            <File>
+              <FileName>uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\uart.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -599,6 +604,11 @@
               <FileName>stm32f10x_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\spl\src\stm32f10x_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f10x_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\spl\src\stm32f10x_usart.c</FilePath>
             </File>
           </Files>
         </Group>

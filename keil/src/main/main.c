@@ -1,6 +1,5 @@
 #include "mcu_support_package/inc/stm32f10x.h"
 
-#include "Delay.h"
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -15,24 +14,24 @@ int main()
 	Delay_Init();
 	delay_ms(100);
 	LCD_Init();
-	ws2812b_init();
-	//Speex_Init();
+	//ws2812b_init();
+	Speex_Init();
 
-	InitButtom();
+	//InitButtom();
 	srand(1);
 	
 	ClearLCDScreen();
 	Cursor(0, 0);
-	PrintStr("Куку kuku");
+	PrintStr("      Всем      ");
 	Cursor(1, 0);
-	PrintStr("Pечаtaю kak hoчу");
+	PrintStr("   Privetiki!   ");
 
 	 
   while(1) 
   {
-		//play_message(&spx_1[0],spx_frame1);
-		//delay_ms(1000);
-		Turn_on_Led_mode(Led_mode);
+		play_message(&spx_1[0],spx_frame1);
+		delay_ms(1000);
+		//Turn_on_Led_mode(Led_mode);
   }
 }
 

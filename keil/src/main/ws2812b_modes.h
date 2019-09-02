@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "main/ws2812b.h"
 #include "main/Delay.h"
 

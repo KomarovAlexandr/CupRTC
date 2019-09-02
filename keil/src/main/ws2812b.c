@@ -1,5 +1,5 @@
 #include "ws2812b.h"
-
+#ifdef USE_LED_MATRIX
 //Передача лог. нуля 0.4мкс
 #define WS2812B_0_VAL						(WS2812B_TIMER_AAR / 3)
 //Передача лог. единицы 0.85мкс
@@ -299,3 +299,5 @@ void HSV(int H, int S, int V){
 		rgb.b = rgb.b & 0xFF;
 	}
 }
+
+#endif

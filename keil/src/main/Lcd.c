@@ -1,11 +1,5 @@
 #include "Lcd.h"
 
-//набор дефайнов для более быстрого управления ногами
-#define			LCM_PIN_MASK_A	(LCM_PIN_RS | LCM_PIN_EN | LCM_PIN_D5 | LCM_PIN_D4)
-#define			LCM_PIN_MASK_B	(LCM_PIN_D7 | LCM_PIN_D6)
-#define			LCM_OUT_A				GPIOA->ODR
-#define			LCM_OUT_B				GPIOB->ODR
-
 #define			LCM_PIN_RS			GPIO_Pin_10         //PA10
 #define			LCM_PIN_EN			GPIO_Pin_11         //PA11
 #define			LCM_PIN_D7			GPIO_Pin_4          //PB4
@@ -13,6 +7,11 @@
 #define			LCM_PIN_D5			GPIO_Pin_15         //PA15
 #define			LCM_PIN_D4			GPIO_Pin_12         //PA12
 
+//набор дефайнов для более быстрого управления ногами
+#define			LCM_PIN_MASK_A	(LCM_PIN_RS | LCM_PIN_EN | LCM_PIN_D5 | LCM_PIN_D4)
+#define			LCM_PIN_MASK_B	(LCM_PIN_D7 | LCM_PIN_D6)
+#define			LCM_OUT_A				GPIOA->ODR
+#define			LCM_OUT_B				GPIOB->ODR
 
 const char rus[] = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя";
 
@@ -69,8 +68,15 @@ void SendByte(char ByteToSend, int IsData)
 	LCM_OUT_A |= ((ByteToSend & 0x1)) << 12;  //позициям
 	LCM_OUT_A |= ((ByteToSend & 0x2)) << 14;
 	LCM_OUT_B |= ((ByteToSend & 0xC)) << 1;
-
-	PulseLCD();                 //отправляем младший полубайт
+	if (IsData == 1){           //если команда то надо установить бит RS
+		LCM_OUT_A |= LCM_PIN_RS;
+		delay_us(4);
+	}
+	else{
+		LCM_OUT_A &= ~LCM_PIN_RS; //если информация то наоборот снять
+		delay_us(4);
+	}
+	PulseLCD();                     //отправляем младший полубайт
 	delay_ms(5);
 	
 	LCM_OUT_A &= ~(LCM_PIN_MASK_A); //зачищаем используемые ноги
@@ -98,6 +104,7 @@ void ClearLCDScreen()
 //---Инициализация дисплея---//
 void LCD_Init(void)
 {
+	Delay_Init();
 	//включаем всю перефирию
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);

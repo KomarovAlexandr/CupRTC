@@ -1,5 +1,7 @@
 #include "ws2812b_modes.h"
 
+#ifdef USE_LED_MATRIX
+
 volatile struct rgb_struct rgb;          //структура для получения цветов после перевода HSV->RGB
 
 void Mode_1(void);
@@ -149,3 +151,5 @@ void EXTI1_IRQHandler(void)
 	if(Led_mode > Number_of_Led_modes) Led_mode = 0;
 	NVIC_EnableIRQ (EXTI1_IRQn);
 }
+
+#endif
