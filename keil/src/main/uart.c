@@ -1,8 +1,8 @@
 #include "uart.h"
 
 char * voice;
-extern char Buf[512];
-extern int flag;
+char Buf[512];
+int flag;
 
 int Size_Voice = 20;
 void Usart_Init(void){
