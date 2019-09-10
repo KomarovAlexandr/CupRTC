@@ -2,9 +2,9 @@
 #define PRJ_CONFIG_H
 
 /*общие настройки проекта*/
-//#define USE_LED_MATRIX      //подключение светодиодов
+#define USE_LED_MATRIX      //подключение светодиодов
 #define USE_LCD_DISPLAY     //подключение дисплея
-#define USE_SPEEX_SPEAKER   //подключение динамика и кодера
+//#define USE_SPEEX_SPEAKER   //подключение динамика и кодера
 
 
 
