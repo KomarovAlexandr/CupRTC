@@ -7,7 +7,7 @@
 #include "uart.h"
 #include "Prj_config.h"
 #include "voice.h"
-
+#include "EEPROM.h"
 //
 int main()
 {

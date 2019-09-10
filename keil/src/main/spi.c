@@ -5,9 +5,12 @@ extern volatile int16_t *outBuffer;
 extern volatile uint8_t Start_Decoding;
 
 void spi_init(void){
-	//Настраиваем MOSI и CLK 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
+	
+	//Настраиваем MOSI и CLK 
 	GPIO_InitTypeDef MosiAndCLK;
 	MosiAndCLK.GPIO_Mode = GPIO_Mode_AF_PP;
 	MosiAndCLK.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_15;
@@ -15,7 +18,6 @@ void spi_init(void){
 	GPIO_Init(GPIOB, &MosiAndCLK);
 	
 	//Настраиваем CS_2
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 	GPIO_InitTypeDef CS2;
 	CS2.GPIO_Mode = GPIO_Mode_Out_PP;
 	CS2.GPIO_Pin = GPIO_Pin_9;
@@ -23,9 +25,16 @@ void spi_init(void){
 	GPIO_Init(GPIOA, &CS2);
 	GPIO_ResetBits(GPIOA, GPIO_Pin_9);
 	
+	//Настраиваем CS_0
+	GPIO_InitTypeDef CS0;
+	CS2.GPIO_Mode = GPIO_Mode_Out_PP;
+	CS2.GPIO_Pin = GPIO_Pin_12;
+	CS2.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOB, &CS0);
+	GPIO_ResetBits(GPIOB, GPIO_Pin_12);
+
 	//Настраиваем SPI2
 	SPI_InitTypeDef spi2;
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
 	spi2.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
 	spi2.SPI_Mode = SPI_Mode_Master;
 	spi2.SPI_DataSize = SPI_DataSize_8b;
