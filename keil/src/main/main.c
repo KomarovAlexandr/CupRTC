@@ -8,8 +8,7 @@
 #include "Prj_config.h"
 #include "voice.h"
 
-extern uint8_t Led_mode;
-
+//
 int main()
 {
 	//Usart_Init();	

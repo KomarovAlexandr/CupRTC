@@ -9,7 +9,7 @@
 
 void Usart_Init(void);
 
- char Usart_read_byte(void);
+char Usart_read_byte(void);
 
 void Usart_read_voice( char * c);
 
