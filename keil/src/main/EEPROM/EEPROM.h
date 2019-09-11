@@ -23,4 +23,16 @@
 
 void EEPROM_Init(void);
 
+void send_inctruction(uint16_t inst);
+
+uint16_t read_byte(void);
+
+void write_enable(void);
+
+void write_disable(void);
+
+void write_status_register(uint16_t value);
+
+uint16_t read_status_register(void);
+
 #endif

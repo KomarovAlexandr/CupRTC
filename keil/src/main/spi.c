@@ -7,8 +7,6 @@ extern volatile uint8_t Start_Decoding;
 void spi_init(void){
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
 	
 	//Настраиваем MOSI и CLK 
 	GPIO_InitTypeDef MosiAndCLK;
@@ -17,35 +15,45 @@ void spi_init(void){
 	MosiAndCLK.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOB, &MosiAndCLK);
 	
+	//Настраиваем MISO
+	GPIO_InitTypeDef Miso;
+	Miso.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+	Miso.GPIO_Pin = GPIO_Pin_14;
+	Miso.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOB, &Miso);
+	
 	//Настраиваем CS_2
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 	GPIO_InitTypeDef CS2;
 	CS2.GPIO_Mode = GPIO_Mode_Out_PP;
 	CS2.GPIO_Pin = GPIO_Pin_9;
 	CS2.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOA, &CS2);
-	GPIO_ResetBits(GPIOA, GPIO_Pin_9);
+	GPIO_SetBits(GPIOA, GPIO_Pin_9);
 	
 	//Настраиваем CS_0
 	GPIO_InitTypeDef CS0;
-	CS2.GPIO_Mode = GPIO_Mode_Out_PP;
-	CS2.GPIO_Pin = GPIO_Pin_12;
-	CS2.GPIO_Speed = GPIO_Speed_50MHz;
+	CS0.GPIO_Mode = GPIO_Mode_Out_PP;
+	CS0.GPIO_Pin = GPIO_Pin_12;
+	CS0.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOB, &CS0);
-	GPIO_ResetBits(GPIOB, GPIO_Pin_12);
+	GPIO_SetBits(GPIOB, GPIO_Pin_12);
 
 	//Настраиваем SPI2
 	SPI_InitTypeDef spi2;
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);
 	spi2.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
 	spi2.SPI_Mode = SPI_Mode_Master;
 	spi2.SPI_DataSize = SPI_DataSize_8b;
 	spi2.SPI_CPOL = SPI_CPOL_Low;
-	spi2.SPI_CPHA = SPI_CPHA_2Edge;
+	spi2.SPI_CPHA = SPI_CPHA_1Edge;
 	spi2.SPI_NSS = SPI_NSS_Soft;
 	spi2.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
 	spi2.SPI_FirstBit = SPI_FirstBit_MSB;
 	spi2.SPI_CRCPolynomial = 10;
 	SPI_Init(SPI2, &spi2);
 	SPI_Cmd(SPI2, ENABLE);
+	SPI_NSSInternalSoftwareConfig(SPI2, SPI_NSSInternalSoft_Set);
 	
 	//Настраиваем TIM2
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
@@ -57,8 +65,8 @@ void spi_init(void){
 	TIM_TimeBaseInit(TIM2, &Tim2);
 	
 	TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
-	//TIM_Cmd(TIM2, ENABLE);
-	NVIC_EnableIRQ(TIM2_IRQn);
+	TIM_Cmd(TIM2, ENABLE);
+	//NVIC_EnableIRQ(TIM2_IRQn);
 }
 
 void TIM2_IRQHandler(){

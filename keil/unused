@@ -1,4 +1,4 @@
-;#<FEEDBACK># ARM Linker, 5060750: Last Updated: Tue Sep 10 19:28:56 2019
+;#<FEEDBACK># ARM Linker, 5060750: Last Updated: Wed Sep 11 14:50:56 2019
 ;VERSION 0.2
 ;FILE bits.o
 speex_bits_destroy <= USED 0
@@ -7,6 +7,7 @@ speex_bits_insert_terminator <= USED 0
 speex_bits_nbytes <= USED 0
 speex_bits_peek <= USED 0
 speex_bits_peek_unsigned <= USED 0
+speex_bits_read_from <= USED 0
 speex_bits_read_whole_bytes <= USED 0
 speex_bits_rewind <= USED 0
 speex_bits_set_bit_buffer <= USED 0
@@ -27,21 +28,31 @@ noise_codebook_unquant <= USED 0
 __asm___7_Delay_c_19c669a7____REV16 <= USED 0
 __asm___7_Delay_c_19c669a7____REVSH <= USED 0
 __asm___7_Delay_c_19c669a7____RRX <= USED 0
+delay_us <= USED 0
 ;FILE eeprom.o
 EEPROM_Init <= USED 0
 __asm___8_EEPROM_c_2d9ead06____REV16 <= USED 0
 __asm___8_EEPROM_c_2d9ead06____REVSH <= USED 0
 __asm___8_EEPROM_c_2d9ead06____RRX <= USED 0
+read_byte <= USED 0
+read_status_register <= USED 0
 send_inctruction <= USED 0
 write_disable <= USED 0
 write_enable <= USED 0
+write_status_register <= USED 0
 ;FILE filters.o
 qmf_decomp <= USED 0
 qmf_synth <= USED 0
 syn_percep_zero16 <= USED 0
 ;FILE lcd.o
 Cleaning <= USED 0
+ClearLCDScreen <= USED 0
+Cursor <= USED 0
+LCD_Init <= USED 0
+PrintStr <= USED 0
 PrintVar <= USED 0
+PulseLCD <= USED 0
+SendByte <= USED 0
 __asm___5_Lcd_c_rus____REV16 <= USED 0
 __asm___5_Lcd_c_rus____REVSH <= USED 0
 __asm___5_Lcd_c_rus____RRX <= USED 0
@@ -51,9 +62,9 @@ __asm___5_Lcd_c_rus____RRX <= USED 0
 forced_pitch_quant <= USED 0
 forced_pitch_unquant <= USED 0
 ;FILE main.o
-__asm___6_main_c_7c385669____REV16 <= USED 0
-__asm___6_main_c_7c385669____REVSH <= USED 0
-__asm___6_main_c_7c385669____RRX <= USED 0
+__asm___6_main_c_main____REV16 <= USED 0
+__asm___6_main_c_main____REVSH <= USED 0
+__asm___6_main_c_main____RRX <= USED 0
 ;FILE misc.o
 NVIC_Init <= USED 0
 NVIC_PriorityGroupConfig <= USED 0
@@ -72,6 +83,7 @@ lsp_quant_nb <= USED 0
 lsp_unquant_high <= USED 0
 lsp_unquant_nb <= USED 0
 ;FILE speex.o
+speex_decode_int <= USED 0
 speex_decode_native <= USED 0
 speex_decoder_destroy <= USED 0
 speex_encode_int <= USED 0
@@ -97,6 +109,7 @@ __asm___5_spi_c_spi_init____RRX <= USED 0
 __asm___5_Spx_c_8dddf197____REV16 <= USED 0
 __asm___5_Spx_c_8dddf197____REVSH <= USED 0
 __asm___5_Spx_c_8dddf197____RRX <= USED 0
+play_message <= USED 0
 ;FILE startup_stm32f103xb.o
 ;FILE stm32f10x_dma.o
 DMA_ClearFlag <= USED 0
@@ -121,6 +134,7 @@ GPIO_EXTILineConfig <= USED 0
 GPIO_EventOutputCmd <= USED 0
 GPIO_EventOutputConfig <= USED 0
 GPIO_PinLockConfig <= USED 0
+GPIO_PinRemapConfig <= USED 0
 GPIO_ReadInputData <= USED 0
 GPIO_ReadInputDataBit <= USED 0
 GPIO_ReadOutputData <= USED 0
@@ -180,8 +194,6 @@ SPI_I2S_DMACmd <= USED 0
 SPI_I2S_DeInit <= USED 0
 SPI_I2S_GetITStatus <= USED 0
 SPI_I2S_ITConfig <= USED 0
-SPI_I2S_ReceiveData <= USED 0
-SPI_NSSInternalSoftwareConfig <= USED 0
 SPI_SSOutputCmd <= USED 0
 SPI_StructInit <= USED 0
 SPI_TransmitCRC <= USED 0

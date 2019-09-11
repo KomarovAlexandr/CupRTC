@@ -4,11 +4,55 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "uart.h"
+//#include "uart.h"
 #include "Prj_config.h"
-#include "voice.h"
+//#include "voice.h"
+
+
+///////////////////////////////////////////////////////////
+#include "Delay.h"
 #include "EEPROM.h"
-//
+#include "spi.h"
+/*--feedback=unused*/
+int main(){
+	Delay_Init();
+	Speex_Init();
+	delay_ms(100);
+//	EEPROM_CS_LOW();
+//	while( !SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) );
+//	SPI2->DR = 0x05;
+//	while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_BSY) == SET);
+//	EEPROM_CS_HIGH();
+	//uint16_t r = 0;
+	//delay_ms(200);
+	
+	while(1){
+		EEPROM_CS_LOW();
+		uint16_t tmp;
+		uint16_t x = 0;
+		tmp = (uint16_t)(0xABCD);
+		SPI_I2S_SendData(SPI2, (uint16_t) WREN);
+		while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == SET);
+		x = SPI_I2S_ReceiveData(SPI2);
+		while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_BSY) == SET);
+		SPI_I2S_SendData(SPI2, (uint16_t) WRDI);
+		while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == SET);
+		x = SPI_I2S_ReceiveData(SPI2);
+		while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_BSY) == SET);
+		EEPROM_CS_HIGH();
+		//write_enable();
+		//delay_ms(10);
+		//r = read_status_register();
+		//delay_ms(10);
+		//r = 0;
+	}
+	
+}
+///////////////////////////////////////////////////////////
+
+
+
+/*
 int main()
 {
 	//Usart_Init();	
@@ -34,7 +78,7 @@ int main()
 		//Turn_on_Led_mode(Led_mode);
   }
 }
-
+*/
 // В Project->Options->Linker, Scatter File выбран файл stack_protection.sct
 // он обеспечивает падение в HardFault при переполнении стека
 // Из-за этого может выдаваться ложное предупреждение "AppData\Local\Temp\p2830-2(34): warning:  #1-D: last line of file ends without a newline"
