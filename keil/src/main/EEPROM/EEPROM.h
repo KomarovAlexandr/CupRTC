@@ -31,8 +31,9 @@ void write_enable(void);
 
 void write_disable(void);
 
-void write_status_register(uint16_t value);
-
 uint16_t read_status_register(void);
 
+void send_buffer(int16_t *buf, uint16_t size);
+
+void read_buffer(int16_t *buf, uint16_t size);
 #endif

@@ -14,39 +14,44 @@
 #include "EEPROM.h"
 #include "spi.h"
 /*--feedback=unused*/
+
 int main(){
 	Delay_Init();
 	Speex_Init();
 	delay_ms(100);
-//	EEPROM_CS_LOW();
-//	while( !SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) );
-//	SPI2->DR = 0x05;
-//	while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_BSY) == SET);
-//	EEPROM_CS_HIGH();
-	//uint16_t r = 0;
-	//delay_ms(200);
 	
-	while(1){
-		EEPROM_CS_LOW();
-		uint16_t tmp;
-		uint16_t x = 0;
-		tmp = (uint16_t)(0xABCD);
-		SPI_I2S_SendData(SPI2, (uint16_t) WREN);
-		while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == SET);
-		x = SPI_I2S_ReceiveData(SPI2);
-		while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_BSY) == SET);
-		SPI_I2S_SendData(SPI2, (uint16_t) WRDI);
-		while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == SET);
-		x = SPI_I2S_ReceiveData(SPI2);
-		while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_BSY) == SET);
-		EEPROM_CS_HIGH();
-		//write_enable();
-		//delay_ms(10);
-		//r = read_status_register();
-		//delay_ms(10);
-		//r = 0;
+	//SPI_I2S_SendData(SPI2, 0);  
+	//uint16_t x = 0;
+	//x = read_status_register();
+	//read_status_register();
+	char * buf = "privet";
+	char * buf1;
+	send_buffer((int16_t *) buf, 6);
+	read_buffer((int16_t *) buf1, 6);
+	int z = 0;
+	int y = 10;
+	z = z + y;
+
+	while(1){		
+		//EEPROM_CS_LOW();
+//		uint16_t tmp;
+//		uint16_t x = 0;
+//		tmp = (uint16_t)(0xABCD);
+//		SPI_I2S_SendData(SPI2, (uint16_t) WREN);
+//		while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == SET);
+//		x = SPI_I2S_ReceiveData(SPI2);
+//		while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_BSY) == SET);
+//		SPI_I2S_SendData(SPI2, (uint16_t) WRDI);
+//		while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == SET);
+//		x = SPI_I2S_ReceiveData(SPI2);
+//		while(SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_BSY) == SET);
+		//EEPROM_CS_HIGH();
+//		write_enable();
+//		delay_ms(10);
+//		r = read_status_register();
+//		delay_ms(10);
+//		r = 0;
 	}
-	
 }
 ///////////////////////////////////////////////////////////
 

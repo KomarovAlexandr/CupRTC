@@ -130,7 +130,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGTARM</Key>
-          <Name>(1010=-1,-1,-1,-1,0)(1007=113,144,300,418,0)(1008=-1,-1,-1,-1,0)(1009=-1,-1,-1,-1,0)(100=15,35,661,707,0)(110=68,95,288,554,0)(111=287,98,507,557,0)(1011=-1,-1,-1,-1,0)(180=-1,-1,-1,-1,0)(120=936,364,1357,768,0)(121=1360,387,1781,791,0)(122=-1,-1,-1,-1,0)(123=-1,-1,-1,-1,0)(140=-1,-1,-1,-1,0)(240=-1,-1,-1,-1,0)(190=-1,-1,-1,-1,0)(200=-1,-1,-1,-1,0)(170=-1,-1,-1,-1,0)(130=-1,-1,-1,-1,0)(131=751,6,1345,699,0)(132=-1,-1,-1,-1,0)(133=772,0,1366,693,0)(160=-1,-1,-1,-1,0)(161=901,229,1349,642,0)(162=-1,-1,-1,-1,0)(210=-1,-1,-1,-1,0)(211=953,414,1280,774,1)(220=-1,-1,-1,-1,0)(221=-1,-1,-1,-1,0)(230=-1,-1,-1,-1,0)(231=-1,-1,-1,-1,0)(232=-1,-1,-1,-1,0)(233=-1,-1,-1,-1,0)(150=-1,-1,-1,-1,0)(151=-1,-1,-1,-1,0)</Name>
+          <Name>(1010=-1,-1,-1,-1,0)(1007=113,144,300,418,0)(1008=-1,-1,-1,-1,0)(1009=-1,-1,-1,-1,0)(100=15,35,661,707,0)(110=68,95,288,554,0)(111=287,98,507,557,0)(1011=-1,-1,-1,-1,0)(180=-1,-1,-1,-1,0)(120=936,364,1357,768,0)(121=-421,365,0,769,1)(122=-1,-1,-1,-1,0)(123=-1,-1,-1,-1,0)(140=-1,-1,-1,-1,0)(240=-1,-1,-1,-1,0)(190=-1,-1,-1,-1,0)(200=-1,-1,-1,-1,0)(170=120,152,405,447,0)(130=-1,-1,-1,-1,0)(131=751,6,1345,699,0)(132=-1,-1,-1,-1,0)(133=772,0,1366,693,0)(160=-1,-1,-1,-1,0)(161=901,229,1349,642,0)(162=-1,-1,-1,-1,0)(210=-1,-1,-1,-1,0)(211=-332,2,-5,362,1)(220=-1,-1,-1,-1,0)(221=-1,-1,-1,-1,0)(230=-1,-1,-1,-1,0)(231=-1,-1,-1,-1,0)(232=-1,-1,-1,-1,0)(233=-1,-1,-1,-1,0)(150=-1,-1,-1,-1,0)(151=-1,-1,-1,-1,0)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -157,25 +157,25 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>40</LineNumber>
+          <LineNumber>31</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134219470</Address>
+          <Address>134220424</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\src\main\main.c</Filename>
+          <Filename>.\src\main\EEPROM\EEPROM.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\dummy\src/main/main.c\40</Expression>
+          <Expression>\\dummy\src/main/EEPROM/EEPROM.c\31</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>36</LineNumber>
+          <LineNumber>30</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134219426</Address>
+          <Address>134219396</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -184,14 +184,14 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\src\main\main.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\dummy\src/main/main.c\36</Expression>
+          <Expression>\\dummy\src/main/main.c\30</Expression>
         </Bp>
         <Bp>
           <Number>2</Number>
           <Type>0</Type>
-          <LineNumber>18</LineNumber>
+          <LineNumber>31</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134219372</Address>
+          <Address>134219404</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -200,28 +200,12 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\src\main\main.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\dummy\src/main/main.c\18</Expression>
+          <Expression>\\dummy\src/main/main.c\31</Expression>
         </Bp>
         <Bp>
           <Number>3</Number>
           <Type>0</Type>
-          <LineNumber>13</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>.\src\main\EEPROM\EEPROM.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>4</Number>
-          <Type>0</Type>
-          <LineNumber>26</LineNumber>
+          <LineNumber>47</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -319,7 +303,7 @@
         <aPa1>0</aPa1>
         <AscS4>0</AscS4>
         <aSer4>0</aSer4>
-        <StkLoc>0</StkLoc>
+        <StkLoc>1</StkLoc>
         <TrcWin>0</TrcWin>
         <newCpu>0</newCpu>
         <uProt>0</uProt>

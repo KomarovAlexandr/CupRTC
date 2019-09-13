@@ -17,7 +17,7 @@ void spi_init(void){
 	
 	//Настраиваем MISO
 	GPIO_InitTypeDef Miso;
-	Miso.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+	Miso.GPIO_Mode = GPIO_Mode_IN_FLOATING;//GPIO_Mode_AF_PP
 	Miso.GPIO_Pin = GPIO_Pin_14;
 	Miso.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOB, &Miso);
@@ -46,14 +46,14 @@ void spi_init(void){
 	spi2.SPI_Mode = SPI_Mode_Master;
 	spi2.SPI_DataSize = SPI_DataSize_8b;
 	spi2.SPI_CPOL = SPI_CPOL_Low;
-	spi2.SPI_CPHA = SPI_CPHA_1Edge;
+	spi2.SPI_CPHA = SPI_CPHA_1Edge;//
 	spi2.SPI_NSS = SPI_NSS_Soft;
 	spi2.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
 	spi2.SPI_FirstBit = SPI_FirstBit_MSB;
 	spi2.SPI_CRCPolynomial = 10;
 	SPI_Init(SPI2, &spi2);
 	SPI_Cmd(SPI2, ENABLE);
-	SPI_NSSInternalSoftwareConfig(SPI2, SPI_NSSInternalSoft_Set);
+	//SPI_NSSInternalSoftwareConfig(SPI2, SPI_NSSInternalSoft_Set);
 	
 	//Настраиваем TIM2
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
