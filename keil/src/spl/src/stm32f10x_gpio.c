@@ -429,6 +429,8 @@ void GPIO_Write(GPIO_TypeDef* GPIOx, uint16_t PortVal)
   *   This parameter can be any combination of GPIO_Pin_x where x can be (0..15).
   * @retval None
   */
+
+
 void GPIO_PinLockConfig(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
 {
   uint32_t tmp = 0x00010000;

@@ -417,11 +417,6 @@
               <FilePath>.\src\main\Spx.c</FilePath>
             </File>
             <File>
-              <FileName>uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\src\main\uart.c</FilePath>
-            </File>
-            <File>
               <FileName>EEPROM.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\src\main\EEPROM\EEPROM.c</FilePath>

@@ -1,17 +1,23 @@
-;#<FEEDBACK># ARM Linker, 5060750: Last Updated: Fri Sep 13 15:24:25 2019
+;#<FEEDBACK># ARM Linker, 5060750: Last Updated: Tue Sep 17 19:16:01 2019
 ;VERSION 0.2
 ;FILE bits.o
+speex_bits_advance <= USED 0
 speex_bits_destroy <= USED 0
+speex_bits_init <= USED 0
 speex_bits_init_buffer <= USED 0
 speex_bits_insert_terminator <= USED 0
 speex_bits_nbytes <= USED 0
+speex_bits_pack <= USED 0
 speex_bits_peek <= USED 0
 speex_bits_peek_unsigned <= USED 0
 speex_bits_read_from <= USED 0
 speex_bits_read_whole_bytes <= USED 0
+speex_bits_remaining <= USED 0
+speex_bits_reset <= USED 0
 speex_bits_rewind <= USED 0
 speex_bits_set_bit_buffer <= USED 0
 speex_bits_unpack_signed <= USED 0
+speex_bits_unpack_unsigned <= USED 0
 speex_bits_write <= USED 0
 speex_bits_write_whole_bytes <= USED 0
 ;FILE buffer.o
@@ -23,22 +29,37 @@ speex_buffer_resize <= USED 0
 speex_buffer_write <= USED 0
 speex_buffer_writezeros <= USED 0
 ;FILE cb_search.o
+noise_codebook_quant <= USED 0
 noise_codebook_unquant <= USED 0
+split_cb_search_shape_sign <= USED 0
+split_cb_shape_sign_unquant <= USED 0
 ;FILE delay.o
 __asm___7_Delay_c_19c669a7____REV16 <= USED 0
 __asm___7_Delay_c_19c669a7____REVSH <= USED 0
 __asm___7_Delay_c_19c669a7____RRX <= USED 0
 delay_us <= USED 0
 ;FILE eeprom.o
-EEPROM_Init <= USED 0
 __asm___8_EEPROM_c_2d9ead06____REV16 <= USED 0
 __asm___8_EEPROM_c_2d9ead06____REVSH <= USED 0
 __asm___8_EEPROM_c_2d9ead06____RRX <= USED 0
-read_byte <= USED 0
-read_status_register <= USED 0
 ;FILE filters.o
+bw_lpc <= USED 0
+compute_impulse_response <= USED 0
+compute_rms <= USED 0
+compute_rms16 <= USED 0
+filter_mem16 <= USED 0
+fir_mem16 <= USED 0
+highpass <= USED 0
+iir_mem16 <= USED 0
+interp_pitch <= USED 0
+multicomb <= USED 0
+normalize16 <= USED 0
 qmf_decomp <= USED 0
 qmf_synth <= USED 0
+residue_percep_zero16 <= USED 0
+sanitize_values32 <= USED 0
+signal_div <= USED 0
+signal_mul <= USED 0
 syn_percep_zero16 <= USED 0
 ;FILE lcd.o
 Cleaning <= USED 0
@@ -53,10 +74,22 @@ __asm___5_Lcd_c_rus____REV16 <= USED 0
 __asm___5_Lcd_c_rus____REVSH <= USED 0
 __asm___5_Lcd_c_rus____RRX <= USED 0
 ;FILE lpc.o
+_spx_autocorr <= USED 0
+_spx_lpc <= USED 0
 ;FILE lsp.o
+lpc_to_lsp <= USED 0
+lsp_enforce_margin <= USED 0
+lsp_interpolate <= USED 0
+lsp_to_lpc <= USED 0
 ;FILE ltp.o
 forced_pitch_quant <= USED 0
 forced_pitch_unquant <= USED 0
+inner_prod <= USED 0
+open_loop_nbest_pitch <= USED 0
+pitch_gain_search_3tap_vq <= USED 0
+pitch_search_3tap <= USED 0
+pitch_unquant_3tap <= USED 0
+pitch_xcorr <= USED 0
 ;FILE main.o
 __asm___6_main_c_main____REV16 <= USED 0
 __asm___6_main_c_main____REVSH <= USED 0
@@ -73,21 +106,37 @@ __asm___6_misc_c_d0fc1254____RRX <= USED 0
 ;FILE modes.o
 speex_mode_query <= USED 0
 ;FILE nb_celp.o
+nb_decode <= USED 0
+nb_decoder_ctl <= USED 0
+nb_decoder_destroy <= USED 0
+nb_decoder_init <= USED 0
+nb_encode <= USED 0
+nb_encoder_ctl <= USED 0
+nb_encoder_destroy <= USED 0
+nb_encoder_init <= USED 0
 ;FILE quant_lsp.o
 lsp_quant_high <= USED 0
+lsp_quant_lbr <= USED 0
 lsp_quant_nb <= USED 0
 lsp_unquant_high <= USED 0
+lsp_unquant_lbr <= USED 0
 lsp_unquant_nb <= USED 0
 ;FILE speex.o
+nb_mode_query <= USED 0
 speex_decode_int <= USED 0
 speex_decode_native <= USED 0
+speex_decoder_ctl <= USED 0
 speex_decoder_destroy <= USED 0
+speex_decoder_init <= USED 0
 speex_encode_int <= USED 0
 speex_encode_native <= USED 0
+speex_encoder_ctl <= USED 0
 speex_encoder_destroy <= USED 0
 speex_encoder_init <= USED 0
 speex_lib_ctl <= USED 0
 ;FILE speex_callbacks.o
+speex_default_user_handler <= USED 0
+speex_inband_handler <= USED 0
 speex_std_enh_request_handler <= USED 0
 speex_std_high_mode_request_handler <= USED 0
 speex_std_low_mode_request_handler <= USED 0
@@ -102,6 +151,7 @@ __asm___5_spi_c_spi_init____REV16 <= USED 0
 __asm___5_spi_c_spi_init____REVSH <= USED 0
 __asm___5_spi_c_spi_init____RRX <= USED 0
 ;FILE spx.o
+Speex_Init <= USED 0
 __asm___5_Spx_c_8dddf197____REV16 <= USED 0
 __asm___5_Spx_c_8dddf197____REVSH <= USED 0
 __asm___5_Spx_c_8dddf197____RRX <= USED 0
@@ -233,6 +283,7 @@ TIM_GetITStatus <= USED 0
 TIM_GetPrescaler <= USED 0
 TIM_ICInit <= USED 0
 TIM_ICStructInit <= USED 0
+TIM_ITConfig <= USED 0
 TIM_ITRxExternalClockConfig <= USED 0
 TIM_InternalClockConfig <= USED 0
 TIM_OC1FastConfig <= USED 0
@@ -292,6 +343,7 @@ USART_ClockStructInit <= USED 0
 USART_Cmd <= USED 0
 USART_DMACmd <= USED 0
 USART_DeInit <= USED 0
+USART_GetFlagStatus <= USED 0
 USART_GetITStatus <= USED 0
 USART_HalfDuplexCmd <= USED 0
 USART_ITConfig <= USED 0
@@ -302,6 +354,7 @@ USART_LINBreakDetectLengthConfig <= USED 0
 USART_LINCmd <= USED 0
 USART_OneBitMethodCmd <= USED 0
 USART_OverSampling8Cmd <= USED 0
+USART_ReceiveData <= USED 0
 USART_ReceiverWakeUpCmd <= USED 0
 USART_SendBreak <= USED 0
 USART_SendData <= USED 0
@@ -320,12 +373,10 @@ SystemCoreClockUpdate <= USED 0
 __asm___18_system_stm32f10x_c_5d646a67____REV16 <= USED 0
 __asm___18_system_stm32f10x_c_5d646a67____REVSH <= USED 0
 __asm___18_system_stm32f10x_c_5d646a67____RRX <= USED 0
-;FILE uart.o
-Usart_Init <= USED 0
-__asm___6_uart_c_b8b7b6d8____REV16 <= USED 0
-__asm___6_uart_c_b8b7b6d8____REVSH <= USED 0
-__asm___6_uart_c_b8b7b6d8____RRX <= USED 0
 ;FILE vq.o
+scal_quant <= USED 0
+scal_quant32 <= USED 0
+vq_nbest <= USED 0
 vq_nbest_sign <= USED 0
 ;FILE ws2812b.o
 __asm___9_ws2812b_c____REV16 <= USED 0
