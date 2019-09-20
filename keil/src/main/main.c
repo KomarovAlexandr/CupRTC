@@ -13,35 +13,61 @@
 #include "spi.h"
 
 int main(){
+	
 	Delay_Init();
-	EEPROM_Init();
+	SPIinit();
+	LCD_Init();
+	delay_ms(1000);
+	/*
+	delay_ms(100);
+	ClearLCDScreen();
+	Cursor(0,0);
+	
+	uint16_t x = 40;
+	uint16_t y = 35;
+	
+	write_enable();
 	delay_ms(100);
 	
-	
-	uint16_t x = 0;
-	uint16_t y = 10;
-	x = read_status_register();
-	x = 0x02;
+	x = test();
+	PrintVar(x);
 	delay_ms(100);
+	
+	x = 0x0C;
 	write_status_register(x);
 	delay_ms(100);
-	y = read_status_register();
-	int16_t buf[6] = {5,70,111,25,26,100};
-	int16_t buf1[6] = {0};
-	send_buffer(buf, 6);
-	read_buffer(buf1, 6);
-
-	write_status_register(y);
-
+	
+	y = test();
+	PrintVar(y);
+	*/
+	//int16_t buf[6] = {5,70,111,25,26,100};
+	//int16_t buf1[6] = {0};
+	//send_buffer(buf, 6);
+	//read_buffer(buf1, 6);
+	//write_status_register(y);
+	
+	eeprom_write_enable();
+	
+	uint8_t buf[6] = {0x0A, 0x0B, 0x0C , 0x0D, 0x0E, 0x0F} ;
+	uint8_t buf1[6];
+	eeprom_write_buffer(buf, 6);
+	delay_ms(50);
+	eeprom_read_buffer(buf1, 6);
+	
 	while(1){		
-
+//		EEPROM_CS_LOW();
+//		SPI_I2S_SendData(SPI2, 0xAA);
+//		while( SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_BSY));
+//		EEPROM_CS_HIGH();
+//		delay_ms(50);
 	}
 }
+
 ///////////////////////////////////////////////////////////
 
 
-/*
 
+/*
 int main()
 {
 	Delay_Init();

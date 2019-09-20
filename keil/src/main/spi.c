@@ -19,19 +19,28 @@ void spi_init(void){
 	spi2.SPI_CPOL = SPI_CPOL_Low;
 	spi2.SPI_CPHA = SPI_CPHA_1Edge;
 	spi2.SPI_NSS = SPI_NSS_Soft;
-	spi2.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_16;
+	spi2.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
 	spi2.SPI_FirstBit = SPI_FirstBit_MSB;
 	spi2.SPI_CRCPolynomial = 10;
 	SPI_Init(SPI2, &spi2);
 	SPI_Cmd(SPI2, ENABLE);
-	
+	//SPI_CalculateCRC(SPI2, DISABLE);
+	//SPI_NSSInternalSoftwareConfig(SPI2, SPI_NSSInternalSoft_Set);
+	//NVIC_EnableIRQ(SPI2_IRQn);
+
 	//Настраиваем MOSI и CLK и MISO 
 	GPIO_InitTypeDef MosiAndCLK;
 	MosiAndCLK.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_15 | GPIO_Pin_14;
 	MosiAndCLK.GPIO_Mode = GPIO_Mode_AF_PP;
 	MosiAndCLK.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOB, &MosiAndCLK);
-
+	/*
+	GPIO_InitTypeDef Miso;
+	Miso.GPIO_Pin = GPIO_Pin_14;
+	Miso.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+	Miso.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_Init(GPIOB, &Miso);
+	*/
 	//Настраиваем CS_2
 	GPIO_InitTypeDef CS2;
 	CS2.GPIO_Mode = GPIO_Mode_Out_PP;
@@ -46,7 +55,7 @@ void spi_init(void){
 	CS0.GPIO_Speed = GPIO_Speed_2MHz;
 	GPIO_Init(GPIOB, &CS0);
 	GPIO_SetBits(GPIOB, GPIO_Pin_12);
-	/*
+	
 	//Настраиваем TIM2	
 	TIM_TimeBaseInitTypeDef Tim2;
 	Tim2.TIM_Prescaler = 4500; //необходима частота 8кгц
@@ -54,8 +63,9 @@ void spi_init(void){
 	Tim2.TIM_Period = 1;
 	Tim2.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseInit(TIM2, &Tim2);
-	*/
+	
 	//TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
+	//TIM_ITConfig(TIM2, TIM_IT_Update, DISABLE);
 	//TIM_Cmd(TIM2, ENABLE);
 	//NVIC_EnableIRQ(TIM2_IRQn);
 }
