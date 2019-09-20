@@ -22,7 +22,9 @@ int main(){
 	uint16_t y = 10;
 	x = read_status_register();
 	x = 0x02;
+	delay_ms(100);
 	write_status_register(x);
+	delay_ms(100);
 	y = read_status_register();
 	int16_t buf[6] = {5,70,111,25,26,100};
 	int16_t buf1[6] = {0};
@@ -35,7 +37,6 @@ int main(){
 
 	}
 }
-
 ///////////////////////////////////////////////////////////
 
 

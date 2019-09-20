@@ -19,7 +19,7 @@ void spi_init(void){
 	spi2.SPI_CPOL = SPI_CPOL_Low;
 	spi2.SPI_CPHA = SPI_CPHA_1Edge;
 	spi2.SPI_NSS = SPI_NSS_Soft;
-	spi2.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
+	spi2.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_16;
 	spi2.SPI_FirstBit = SPI_FirstBit_MSB;
 	spi2.SPI_CRCPolynomial = 10;
 	SPI_Init(SPI2, &spi2);
@@ -46,7 +46,7 @@ void spi_init(void){
 	CS0.GPIO_Speed = GPIO_Speed_2MHz;
 	GPIO_Init(GPIOB, &CS0);
 	GPIO_SetBits(GPIOB, GPIO_Pin_12);
-
+	/*
 	//Настраиваем TIM2	
 	TIM_TimeBaseInitTypeDef Tim2;
 	Tim2.TIM_Prescaler = 4500; //необходима частота 8кгц
@@ -54,7 +54,7 @@ void spi_init(void){
 	Tim2.TIM_Period = 1;
 	Tim2.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseInit(TIM2, &Tim2);
-	
+	*/
 	//TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
 	//TIM_Cmd(TIM2, ENABLE);
 	//NVIC_EnableIRQ(TIM2_IRQn);

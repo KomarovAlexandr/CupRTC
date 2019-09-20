@@ -36,6 +36,7 @@ void write_disable(void){
 	EEPROM_CS_LOW();
 	send_inctruction( WRDI );
 	EEPROM_CS_HIGH();
+	delay_ms(10);
 }
 
 uint16_t read_status_register(void){

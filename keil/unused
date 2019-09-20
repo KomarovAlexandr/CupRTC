@@ -1,4 +1,4 @@
-;#<FEEDBACK># ARM Linker, 5060750: Last Updated: Tue Sep 17 19:16:01 2019
+;#<FEEDBACK># ARM Linker, 5060750: Last Updated: Wed Sep 18 18:51:12 2019
 ;VERSION 0.2
 ;FILE bits.o
 speex_bits_advance <= USED 0
@@ -329,6 +329,7 @@ TIM_SetIC2Prescaler <= USED 0
 TIM_SetIC3Prescaler <= USED 0
 TIM_SetIC4Prescaler <= USED 0
 TIM_TIxExternalClockConfig <= USED 0
+TIM_TimeBaseInit <= USED 0
 TIM_TimeBaseStructInit <= USED 0
 TIM_UpdateDisableConfig <= USED 0
 TIM_UpdateRequestConfig <= USED 0
