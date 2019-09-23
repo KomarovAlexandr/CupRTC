@@ -1,4 +1,4 @@
-;#<FEEDBACK># ARM Linker, 5060750: Last Updated: Fri Sep 20 17:41:10 2019
+;#<FEEDBACK># ARM Linker, 5060750: Last Updated: Mon Sep 23 12:01:11 2019
 ;VERSION 0.2
 ;FILE bits.o
 speex_bits_advance <= USED 0
@@ -37,13 +37,14 @@ split_cb_shape_sign_unquant <= USED 0
 __asm___7_Delay_c_19c669a7____REV16 <= USED 0
 __asm___7_Delay_c_19c669a7____REVSH <= USED 0
 __asm___7_Delay_c_19c669a7____RRX <= USED 0
+delay_us <= USED 0
 ;FILE eeprom.o
-__asm___8_EEPROM_c_SPIinit____REV16 <= USED 0
-__asm___8_EEPROM_c_SPIinit____REVSH <= USED 0
-__asm___8_EEPROM_c_SPIinit____RRX <= USED 0
+__asm___8_EEPROM_c_EEPR_Buf____REV16 <= USED 0
+__asm___8_EEPROM_c_EEPR_Buf____REVSH <= USED 0
+__asm___8_EEPROM_c_EEPR_Buf____RRX <= USED 0
+eeprom_write_disable <= USED 0
 read_status_register <= USED 0
 test <= USED 0
-write_disable <= USED 0
 write_status_register <= USED 0
 ;FILE filters.o
 bw_lpc <= USED 0
@@ -68,8 +69,11 @@ syn_percep_zero16 <= USED 0
 Cleaning <= USED 0
 ClearLCDScreen <= USED 0
 Cursor <= USED 0
+LCD_Init <= USED 0
 PrintStr <= USED 0
 PrintVar <= USED 0
+PulseLCD <= USED 0
+SendByte <= USED 0
 __asm___5_Lcd_c_rus____REV16 <= USED 0
 __asm___5_Lcd_c_rus____REVSH <= USED 0
 __asm___5_Lcd_c_rus____RRX <= USED 0
@@ -180,6 +184,7 @@ GPIO_EXTILineConfig <= USED 0
 GPIO_EventOutputCmd <= USED 0
 GPIO_EventOutputConfig <= USED 0
 GPIO_PinLockConfig <= USED 0
+GPIO_PinRemapConfig <= USED 0
 GPIO_ReadInputData <= USED 0
 GPIO_ReadInputDataBit <= USED 0
 GPIO_ReadOutputData <= USED 0

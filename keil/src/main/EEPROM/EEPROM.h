@@ -29,7 +29,7 @@
 
 void SPIinit(void);
 
-void send_byte(uint16_t inst);
+void eeprom_send_byte(uint16_t inst);
 
 uint16_t eeprom_read_byte(void);
 
@@ -37,11 +37,11 @@ uint16_t test(void);
 
 void eeprom_write_enable(void);
 
-void write_disable(void);
+void eeprom_write_disable(void);
 
-uint16_t read_status_register(void);
+uint16_t eeprom_read_status_register(void);
 
-void write_status_register(uint16_t reg);
+void eeprom_write_status_register(uint16_t reg);
 
 void eeprom_write_buffer(uint8_t *buf, uint16_t size);
 
