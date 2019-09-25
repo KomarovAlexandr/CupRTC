@@ -1,4 +1,4 @@
-;#<FEEDBACK># ARM Linker, 5060750: Last Updated: Wed Sep 25 11:45:53 2019
+;#<FEEDBACK># ARM Linker, 5060750: Last Updated: Wed Sep 25 12:12:06 2019
 ;VERSION 0.2
 ;FILE bits.o
 speex_bits_destroy <= USED 0
@@ -7,6 +7,7 @@ speex_bits_insert_terminator <= USED 0
 speex_bits_nbytes <= USED 0
 speex_bits_peek <= USED 0
 speex_bits_peek_unsigned <= USED 0
+speex_bits_read_from <= USED 0
 speex_bits_read_whole_bytes <= USED 0
 speex_bits_rewind <= USED 0
 speex_bits_set_bit_buffer <= USED 0
@@ -31,6 +32,10 @@ __asm___7_Delay_c_19c669a7____RRX <= USED 0
 __asm___8_EEPROM_c_SPIinit____REV16 <= USED 0
 __asm___8_EEPROM_c_SPIinit____REVSH <= USED 0
 __asm___8_EEPROM_c_SPIinit____RRX <= USED 0
+eeprom_read_buffer <= USED 0
+eeprom_read_byte <= USED 0
+eeprom_send_address <= USED 0
+eeprom_send_byte <= USED 0
 eeprom_write_buffer <= USED 0
 eeprom_write_disable <= USED 0
 eeprom_write_enable <= USED 0
@@ -74,6 +79,7 @@ lsp_quant_nb <= USED 0
 lsp_unquant_high <= USED 0
 lsp_unquant_nb <= USED 0
 ;FILE speex.o
+speex_decode_int <= USED 0
 speex_decode_native <= USED 0
 speex_decoder_destroy <= USED 0
 speex_encode_int <= USED 0
@@ -100,6 +106,7 @@ __asm___5_Spx_c_8dddf197____REV16 <= USED 0
 __asm___5_Spx_c_8dddf197____REVSH <= USED 0
 __asm___5_Spx_c_8dddf197____RRX <= USED 0
 play_message <= USED 0
+play_message_from_eeprom <= USED 0
 ;FILE startup_stm32f103xb.o
 ;FILE stm32f10x_dma.o
 DMA_ClearFlag <= USED 0
@@ -183,6 +190,7 @@ SPI_I2S_DMACmd <= USED 0
 SPI_I2S_DeInit <= USED 0
 SPI_I2S_GetITStatus <= USED 0
 SPI_I2S_ITConfig <= USED 0
+SPI_I2S_ReceiveData <= USED 0
 SPI_NSSInternalSoftwareConfig <= USED 0
 SPI_SSOutputCmd <= USED 0
 SPI_StructInit <= USED 0
@@ -202,6 +210,7 @@ TIM_ClearOC1Ref <= USED 0
 TIM_ClearOC2Ref <= USED 0
 TIM_ClearOC3Ref <= USED 0
 TIM_ClearOC4Ref <= USED 0
+TIM_Cmd <= USED 0
 TIM_CounterModeConfig <= USED 0
 TIM_CtrlPWMOutputs <= USED 0
 TIM_DMACmd <= USED 0

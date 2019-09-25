@@ -30,7 +30,7 @@ int main(){
 	PrintStr("   Privetiki!   ");
 	
 	while(1){
-		play_message_from_eeprom(32, 2640/20);
+		//play_message_from_eeprom(32, 2640/20);
 		Turn_on_Led_mode(Led_mode);
 	}
 }
