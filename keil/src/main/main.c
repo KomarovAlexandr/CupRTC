@@ -4,37 +4,39 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "uart.h"
 #include "Prj_config.h"
-#include "voice.h"
+//#include "voice.h"
+
+
+#include "Delay.h"
+#include "EEPROM.h"
+#include "spi.h"
 
 extern uint8_t Led_mode;
 
-int main()
-{
-	//Usart_Init();	
+int main(){
 	Delay_Init();
-	delay_ms(100);
-	LCD_Init();
-	//ws2812b_init();
+	InitButtom();
+	ws2812b_init();
+	SPIinit();
 	Speex_Init();
-
-	//InitButtom();
-	//srand(1);
+	LCD_Init();
+	delay_ms(100);
 	
 	ClearLCDScreen();
 	Cursor(0, 0);
 	PrintStr("      Всем      ");
 	Cursor(1, 0);
 	PrintStr("   Privetiki!   ");
-
-	while(1) 
-  {
-		play_message(spx_voice2, spx_frames2);
-		delay_ms(1000);
-		//Turn_on_Led_mode(Led_mode);
-  }
+	
+	while(1){
+		play_message_from_eeprom(32, 2640/20);
+		Turn_on_Led_mode(Led_mode);
+	}
 }
+
+
+
 
 // В Project->Options->Linker, Scatter File выбран файл stack_protection.sct
 // он обеспечивает падение в HardFault при переполнении стека

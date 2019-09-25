@@ -1,4 +1,4 @@
-;#<FEEDBACK># ARM Linker, 5060750: Last Updated: Tue Sep 10 14:21:21 2019
+;#<FEEDBACK># ARM Linker, 5060750: Last Updated: Wed Sep 25 11:45:53 2019
 ;VERSION 0.2
 ;FILE bits.o
 speex_bits_destroy <= USED 0
@@ -27,6 +27,16 @@ noise_codebook_unquant <= USED 0
 __asm___7_Delay_c_19c669a7____REV16 <= USED 0
 __asm___7_Delay_c_19c669a7____REVSH <= USED 0
 __asm___7_Delay_c_19c669a7____RRX <= USED 0
+;FILE eeprom.o
+__asm___8_EEPROM_c_SPIinit____REV16 <= USED 0
+__asm___8_EEPROM_c_SPIinit____REVSH <= USED 0
+__asm___8_EEPROM_c_SPIinit____RRX <= USED 0
+eeprom_write_buffer <= USED 0
+eeprom_write_disable <= USED 0
+eeprom_write_enable <= USED 0
+eeprom_write_page <= USED 0
+read_status_register <= USED 0
+write_status_register <= USED 0
 ;FILE filters.o
 qmf_decomp <= USED 0
 qmf_synth <= USED 0
@@ -43,9 +53,9 @@ __asm___5_Lcd_c_rus____RRX <= USED 0
 forced_pitch_quant <= USED 0
 forced_pitch_unquant <= USED 0
 ;FILE main.o
-__asm___6_main_c_7c385669____REV16 <= USED 0
-__asm___6_main_c_7c385669____REVSH <= USED 0
-__asm___6_main_c_7c385669____RRX <= USED 0
+__asm___6_main_c_main____REV16 <= USED 0
+__asm___6_main_c_main____REVSH <= USED 0
+__asm___6_main_c_main____RRX <= USED 0
 ;FILE misc.o
 NVIC_Init <= USED 0
 NVIC_PriorityGroupConfig <= USED 0
@@ -89,6 +99,7 @@ __asm___5_spi_c_spi_init____RRX <= USED 0
 __asm___5_Spx_c_8dddf197____REV16 <= USED 0
 __asm___5_Spx_c_8dddf197____REVSH <= USED 0
 __asm___5_Spx_c_8dddf197____RRX <= USED 0
+play_message <= USED 0
 ;FILE startup_stm32f103xb.o
 ;FILE stm32f10x_dma.o
 DMA_ClearFlag <= USED 0
@@ -172,7 +183,6 @@ SPI_I2S_DMACmd <= USED 0
 SPI_I2S_DeInit <= USED 0
 SPI_I2S_GetITStatus <= USED 0
 SPI_I2S_ITConfig <= USED 0
-SPI_I2S_ReceiveData <= USED 0
 SPI_NSSInternalSoftwareConfig <= USED 0
 SPI_SSOutputCmd <= USED 0
 SPI_StructInit <= USED 0
@@ -275,6 +285,7 @@ USART_ClockStructInit <= USED 0
 USART_Cmd <= USED 0
 USART_DMACmd <= USED 0
 USART_DeInit <= USED 0
+USART_GetFlagStatus <= USED 0
 USART_GetITStatus <= USED 0
 USART_HalfDuplexCmd <= USED 0
 USART_ITConfig <= USED 0
@@ -285,6 +296,7 @@ USART_LINBreakDetectLengthConfig <= USED 0
 USART_LINCmd <= USED 0
 USART_OneBitMethodCmd <= USED 0
 USART_OverSampling8Cmd <= USED 0
+USART_ReceiveData <= USED 0
 USART_ReceiverWakeUpCmd <= USED 0
 USART_SendBreak <= USED 0
 USART_SendData <= USED 0
@@ -303,18 +315,13 @@ SystemCoreClockUpdate <= USED 0
 __asm___18_system_stm32f10x_c_5d646a67____REV16 <= USED 0
 __asm___18_system_stm32f10x_c_5d646a67____REVSH <= USED 0
 __asm___18_system_stm32f10x_c_5d646a67____RRX <= USED 0
-;FILE uart.o
-Usart_Init <= USED 0
-__asm___6_uart_c_b8b7b6d8____REV16 <= USED 0
-__asm___6_uart_c_b8b7b6d8____REVSH <= USED 0
-__asm___6_uart_c_b8b7b6d8____RRX <= USED 0
 ;FILE vq.o
 vq_nbest_sign <= USED 0
 ;FILE ws2812b.o
-__asm___9_ws2812b_c____REV16 <= USED 0
-__asm___9_ws2812b_c____REVSH <= USED 0
-__asm___9_ws2812b_c____RRX <= USED 0
+__asm___9_ws2812b_c_dbfc8092____REV16 <= USED 0
+__asm___9_ws2812b_c_dbfc8092____REVSH <= USED 0
+__asm___9_ws2812b_c_dbfc8092____RRX <= USED 0
 ;FILE ws2812b_modes.o
-__asm___15_ws2812b_modes_c____REV16 <= USED 0
-__asm___15_ws2812b_modes_c____REVSH <= USED 0
-__asm___15_ws2812b_modes_c____RRX <= USED 0
+__asm___15_ws2812b_modes_c_Led_mode____REV16 <= USED 0
+__asm___15_ws2812b_modes_c_Led_mode____REVSH <= USED 0
+__asm___15_ws2812b_modes_c_Led_mode____RRX <= USED 0

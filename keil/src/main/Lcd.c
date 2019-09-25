@@ -43,7 +43,7 @@ void PulseLCD()
 	delay_us(2);
 	LCM_OUT_A &= (~LCM_PIN_EN);  //потом снимаем
 }
- 
+
 //---Отсылка байта в дисплей---//
 void SendByte(char ByteToSend, int IsData)
 {

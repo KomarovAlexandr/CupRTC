@@ -174,6 +174,26 @@
           <Number>1</Number>
           <Type>0</Type>
           <LineNumber>122</LineNumber>
+<<<<<<< HEAD
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134220264</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\src\main\Spx.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\dummy\src/main/Spx.c\122</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>33</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134219400</Address>
+=======
           <EnabledFlag>1</EnabledFlag>
           <Address>134220264</Address>
           <ByteObject>0</ByteObject>
@@ -208,12 +228,41 @@
           <LineNumber>31</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>134219392</Address>
+>>>>>>> eprom
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\src\main\main.c</Filename>
+          <ExecCommand></ExecCommand>
+<<<<<<< HEAD
+          <Expression>\\dummy\src/main/main.c\33</Expression>
+        </Bp>
+        <Bp>
+          <Number>3</Number>
+          <Type>0</Type>
+          <LineNumber>31</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134219392</Address>
+=======
+          <Expression>\\dummy\src/main/main.c\31</Expression>
+        </Bp>
+        <Bp>
+          <Number>4</Number>
+          <Type>0</Type>
+          <LineNumber>156</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134220410</Address>
+>>>>>>> eprom
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+<<<<<<< HEAD
           <Filename>.\src\main\main.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\dummy\src/main/main.c\31</Expression>
@@ -224,15 +273,34 @@
           <LineNumber>156</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>134220410</Address>
+=======
+          <Filename>.\src\main\Spx.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\dummy\src/main/Spx.c\156</Expression>
+        </Bp>
+        <Bp>
+          <Number>5</Number>
+          <Type>0</Type>
+          <LineNumber>125</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+>>>>>>> eprom
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
+<<<<<<< HEAD
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\src\main\Spx.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\dummy\src/main/Spx.c\156</Expression>
+=======
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>.\src\main\Spx.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+>>>>>>> eprom
         </Bp>
       </Breakpoint>
       <WatchWindow1>

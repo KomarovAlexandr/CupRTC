@@ -26,6 +26,7 @@ void Speex_Init(void)
 void play_message(unsigned char const *array, uint16_t frame_number)
 {
 	TIM_Cmd(TIM2, ENABLE);
+	NVIC_EnableIRQ(TIM2_IRQn);
 	int i;
 	uint16_t sample_index = 0;
 	for(i=0;i<ENCODED_FRAME_SIZE; i++)
@@ -35,7 +36,7 @@ void play_message(unsigned char const *array, uint16_t frame_number)
 	}
 	speex_bits_read_from(&bits, input_bytes, ENCODED_FRAME_SIZE);
 	speex_decode_int(dec_state, &bits, (spx_int16_t*)OUT_Buffer[0]);
-
+	NB_Frames++;
 	for(i=0;i<ENCODED_FRAME_SIZE; i++)
 	{
 		input_bytes[i] = array[sample_index];
@@ -73,8 +74,53 @@ void play_message(unsigned char const *array, uint16_t frame_number)
 			NB_Frames++;
 		}
 	}
+	
 	TIM_Cmd(TIM2, DISABLE);
+	NVIC_DisableIRQ(TIM2_IRQn);
 	sample_index = 0;
+	NB_Frames = 0;
+	outBuffer = OUT_Buffer[0];
+}
+
+
+void play_message_from_eeprom(uint16_t address, uint16_t frame_number){
+	
+	eeprom_read_buffer((uint8_t *)input_bytes, 20, address);
+	address += 20;
+	speex_bits_read_from(&bits, input_bytes, ENCODED_FRAME_SIZE);
+	speex_decode_int(dec_state, &bits, (spx_int16_t*)OUT_Buffer[0]);
+	
+	eeprom_read_buffer((uint8_t *)input_bytes, 20, address);
+	address += 20;
+	speex_bits_read_from(&bits, input_bytes, ENCODED_FRAME_SIZE);
+	speex_decode_int(dec_state, &bits, (spx_int16_t*)OUT_Buffer[1]);
+	NB_Frames+=2;
+	
+	TIM_Cmd(TIM2, ENABLE);
+	NVIC_EnableIRQ(TIM2_IRQn);
+	while(NB_Frames < frame_number)
+	{
+		if(Start_Decoding == 1)
+		{
+			eeprom_read_buffer((uint8_t *)input_bytes, 20, address);
+			address += 20;
+			speex_bits_read_from(&bits, input_bytes, ENCODED_FRAME_SIZE);
+			speex_decode_int(dec_state, &bits, (spx_int16_t*)OUT_Buffer[0]);
+			Start_Decoding = 0;
+			NB_Frames++;
+		}
+		if(Start_Decoding == 2)
+		{
+			eeprom_read_buffer((uint8_t *)input_bytes, 20, address);
+			address += 20;
+			speex_bits_read_from(&bits, input_bytes, ENCODED_FRAME_SIZE);
+			speex_decode_int(dec_state, &bits, (spx_int16_t*)OUT_Buffer[1]);
+			Start_Decoding = 0;
+			NB_Frames++;
+		}
+	}
+	NVIC_DisableIRQ(TIM2_IRQn);
+	TIM_Cmd(TIM2, DISABLE);
 	NB_Frames = 0;
 	outBuffer = OUT_Buffer[0];
 }
