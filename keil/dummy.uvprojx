@@ -337,7 +337,7 @@
               <MiscControls>--c99 --feedback=unused</MiscControls>
               <Define>STM32F103xB, USE_FULL_ASSERT, USE_STDPERIPH_DRIVER, STM32F10X_MD, HSE_VALUE=12000000, HAVE_CONFIG_H</Define>
               <Undefine></Undefine>
-              <IncludePath>.\src\cmsis;.\src;.\src\mcu_support_package\inc;.\src\spl\inc;.\src\spl;.\src\main\STM32F10x_Speex_Lib\include;.\src\main\STM32F10x_Speex_Lib\libspeex;.\src\main\STM32F10x_Speex_Lib\STM32;.\src\main\STM32F10x_Speex_Lib\STM32\libspeex;.\src\main\STM32F10x_Speex_Lib\STM32\include;.\src\main\STM32F10x_Speex_Lib\STM32\libspeex\arm</IncludePath>
+              <IncludePath>.\src\cmsis;.\src;.\src\mcu_support_package\inc;.\src\spl\inc;.\src\spl;.\src\main\STM32F10x_Speex_Lib\include;.\src\main\STM32F10x_Speex_Lib\libspeex;.\src\main\STM32F10x_Speex_Lib\STM32;.\src\main\STM32F10x_Speex_Lib\STM32\libspeex;.\src\main\STM32F10x_Speex_Lib\STM32\include;.\src\main\STM32F10x_Speex_Lib\STM32\libspeex\arm;.\src\main\EEPROM</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -417,9 +417,9 @@
               <FilePath>.\src\main\Spx.c</FilePath>
             </File>
             <File>
-              <FileName>uart.c</FileName>
+              <FileName>EEPROM.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\main\uart.c</FilePath>
+              <FilePath>.\src\main\EEPROM\EEPROM.c</FilePath>
             </File>
           </Files>
         </Group>
