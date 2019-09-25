@@ -24,9 +24,6 @@ void spi_init(void){
 	spi2.SPI_CRCPolynomial = 10;
 	SPI_Init(SPI2, &spi2);
 	SPI_Cmd(SPI2, ENABLE);
-	//SPI_CalculateCRC(SPI2, DISABLE);
-	//SPI_NSSInternalSoftwareConfig(SPI2, SPI_NSSInternalSoft_Set);
-	//NVIC_EnableIRQ(SPI2_IRQn);
 
 	//Настраиваем MOSI и CLK и MISO 
 	GPIO_InitTypeDef MosiAndCLK;
@@ -34,13 +31,7 @@ void spi_init(void){
 	MosiAndCLK.GPIO_Mode = GPIO_Mode_AF_PP;
 	MosiAndCLK.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOB, &MosiAndCLK);
-	/*
-	GPIO_InitTypeDef Miso;
-	Miso.GPIO_Pin = GPIO_Pin_14;
-	Miso.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-	Miso.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_Init(GPIOB, &Miso);
-	*/
+	
 	//Настраиваем CS_2
 	GPIO_InitTypeDef CS2;
 	CS2.GPIO_Mode = GPIO_Mode_Out_PP;
@@ -64,16 +55,14 @@ void spi_init(void){
 	Tim2.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseInit(TIM2, &Tim2);
 	
-	//TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
-	//TIM_ITConfig(TIM2, TIM_IT_Update, DISABLE);
+	TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
 	//TIM_Cmd(TIM2, ENABLE);
-	//NVIC_EnableIRQ(TIM2_IRQn);
 }
 
 void TIM2_IRQHandler(){
 	NVIC_DisableIRQ(TIM2_IRQn);
 	TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
-  
+	
 	//Читаем из текущего буфера значение;
 	//понижаем его разрядность и прибавляем 512, поскольку
 	//в буфере число со знаком;
@@ -86,7 +75,7 @@ void TIM2_IRQHandler(){
 	GPIO_SetBits(GPIOA, GPIO_Pin_9);
 	//Если дошли до конца буфера, изменяем указатель на другой буфер
 	//и начинаем декодировать данные;
-
+	
 	if(outBuffer == &OUT_Buffer[1][159])
 	{
 		outBuffer = OUT_Buffer[0];
@@ -101,7 +90,7 @@ void TIM2_IRQHandler(){
 	{
 		outBuffer++;
 	}
-	TIM_Cmd(TIM2, ENABLE);
+	//TIM_Cmd(TIM2, ENABLE);
 	NVIC_EnableIRQ(TIM2_IRQn);
 }
 

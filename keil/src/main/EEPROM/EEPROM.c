@@ -1,10 +1,5 @@
 #include "EEPROM.h"
 
-static uint8_t FlagSPI = 0;
-
-uint16_t EEPR_Buf[12] = {0};
-uint8_t EEPR_Buf_Size = 0;
-static uint8_t MesCount = 0;
 
 void SPIinit(void){
 	spi_init();
@@ -13,23 +8,9 @@ void SPIinit(void){
 		while(1);
 	}
 }
-//тестовая функция 
-uint16_t test(void){
-	EEPROM_CS_LOW();
-	uint16_t x = 0;
-	EEPR_Buf[0] = RDSR;
-	EEPR_Buf[1] = 0;
-	EEPR_Buf_Size = 2;
-	WRITING_INTERRUPTIONS_ON();
-	while(!FlagSPI);
-	FlagSPI = 0;
-	EEPROM_CS_HIGH();
-	x = SPI_I2S_ReceiveData(SPI2);
-	return x;
-}
 
 /*
-	Функция отправки байта по spi
+*Функция отправки байта по spi
 */
 void eeprom_send_byte(uint16_t inst){
 	SPI_I2S_SendData(SPI2, inst);
@@ -40,7 +21,7 @@ void eeprom_send_byte(uint16_t inst){
 }
 
 /*
-	Функиця получения байта по spi
+*Функиця получения байта по spi
 */
 uint16_t eeprom_read_byte(void){
 	//при плучении байта необходимо генерировать такт на ноге CLOCK
@@ -51,104 +32,162 @@ uint16_t eeprom_read_byte(void){
 	return SPI_I2S_ReceiveData(SPI2);
 }
 
+/*
+*Отправка команды на разрешение записи
+*Важно: согласно даташиту бит разрешения записи в регистре состояния будет
+*сброшен в следующих случаях: после подачи питания, после выполнения команды
+*WRDI (запрет записи), после выполнения WRSR (после записи регистра состояния),
+*после завершения записи в память.
+*/
 void eeprom_write_enable(void){
 	EEPROM_CS_LOW();
 	eeprom_send_byte( WREN );
 	EEPROM_CS_HIGH();
-	delay_ms(10);
+	delay_ms(5);
 }
 
+/*
+*Отрпавлка команды на запрет записи
+*/
 void eeprom_write_disable(void){
 	EEPROM_CS_LOW();
 	eeprom_send_byte( WRDI );
 	EEPROM_CS_HIGH();
-	delay_ms(10);
+	delay_ms(5);
 }
 
+/*
+*Получение регистра состояния, 8 бит
+*b7,b6,b5,b4,b3,b2,b1,b0
+*b7 - SWRD - защита от записи в регист состояний, а также вместе с ногой W могут включить
+*аппаратную защиту и работать только на чтение данных
+*b6,b5,b4 - не используются, всегда равны 0
+*b3,b2 - BP1, BP0 - определяют область памяти для аппаратной защиты, в случае ее включения
+*b1 - WEL - бит разрешения записи
+*b0 - WIP - показывает занята ли память каким-нибудь циклом записи
+*/
 uint16_t read_status_register(void){
 	EEPROM_CS_LOW();
 	eeprom_send_byte( RDSR );
-	uint16_t res = eeprom_read_byte();
+	uint16_t res = 0;
+	res = eeprom_read_byte();
 	EEPROM_CS_HIGH();
-	delay_ms(10);
+	delay_ms(5);
 	return res;
 }
 
-void write_status_register(uint16_t reg){
+/*
+*Функция записи регистра состояний. Позволяет управлять битами SWRD,BP1,BP0.
+*Разрешать запись этой (бит WEL) командой нет смцысла, т.к. после выполнения функции
+*этот бит автоматически сбросится.
+*/
+void write_status_register(uint8_t reg){
 	EEPROM_CS_LOW();
-	EEPR_Buf[0] = WRSR;
-	EEPR_Buf[1] = reg;
-	EEPR_Buf_Size = 2;
-	WRITING_INTERRUPTIONS_ON();
-	while(!FlagSPI);
-	FlagSPI = 0;
+	eeprom_send_byte(WRSR);
+	eeprom_send_byte(reg);
 	EEPROM_CS_HIGH();
-	delay_ms(10);
+	delay_ms(5);
 }
 
+/*
+*Внутренняя функция отправки 16-ти битного адреса в eeprom. Сначала старший байт, 
+*потом младший.
+*/
 void eeprom_send_address(uint16_t address){
 	eeprom_send_byte(address >> 8);
 	eeprom_send_byte(address);
 }
 
-void eeprom_write_buffer(uint8_t *buf, uint16_t size){
-	//EEPROM_CS_LOW();
-	
+/*
+*/
+void eeprom_write_page(uint8_t *buf, uint16_t size, uint16_t address){
+	eeprom_write_enable();
 	EEPROM_CS_LOW();
 	eeprom_send_byte(WRITE);
-	eeprom_send_address(0);
-	uint16_t x = 0;
-	while(x < size){
-		eeprom_send_byte(buf[x]);
-		x++;
+	eeprom_send_address(address);
+	delay_ms(5);
+	for(int i = 0; i < size; i++){
+		eeprom_send_byte(buf[i]);
 	}
 	EEPROM_CS_HIGH();
+	delay_ms(5);
 }
-
-void eeprom_read_buffer(uint8_t *buf, uint16_t size){
-	EEPROM_CS_LOW();
-	eeprom_send_byte(READ);
-	eeprom_send_address(0);
-	uint16_t x = 0;
-	while(x < size){
-		buf[x] = eeprom_read_byte();
-		x++;
-	}
-	EEPROM_CS_HIGH();
-}
-
-
 
 /*
-	Настройка прерываний для SPI2. Обрабатывает прерывания и на чтение и на запись
 */
-void SPI2_IRQHandler(){
-	if((SPI2 -> CR2) & SPI_CR2_TXEIE){
-		WRITING_INTERRUPTIONS_OFF();
-		if(MesCount == EEPR_Buf_Size){
-			FlagSPI = 1;
-			MesCount = 0;
-			while( !SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE));
-			while( SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_BSY));
-		}
-		else{
-			SPI2 -> DR = EEPR_Buf[MesCount];
-			MesCount++;
-			WRITING_INTERRUPTIONS_ON();
-		}
+void eeprom_read_buffer(uint8_t *buf, uint16_t size, uint16_t address){
+	EEPROM_CS_LOW();
+	eeprom_send_byte(READ);
+	eeprom_send_address(address);
+	//delay_ms(1);
+	//перед чтением буфера очистим регистр приема
+	SPI_I2S_ReceiveData(SPI2);
+	for(int i = 0; i < size; i++){
+		buf[i] = eeprom_read_byte();
 	}
-	else{
-		READING_INTERRUPTIONS_OFF();
-		if(MesCount == EEPR_Buf_Size){
-			FlagSPI = 1;
-			MesCount = 0;
-			while( !SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE));
-			while( SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_BSY));
+	EEPROM_CS_HIGH();
+}
+
+void eeprom_write_buffer(uint8_t *buf, uint16_t size, uint16_t address){
+	
+	uint16_t NumOfPage = 0, NumOfSingle = 0, Addr = 0, count = 0, temp = 0;
+	uint16_t sEE_DataNum = 0;
+	
+	Addr = address % EEPROM_PAGESIZE;
+	count = EEPROM_PAGESIZE - Addr;
+	NumOfPage =  size / EEPROM_PAGESIZE;
+	NumOfSingle = size % EEPROM_PAGESIZE;
+	if (Addr == 0) { /* WriteAddr is EEPROM_PAGESIZE aligned  */
+		if (NumOfPage == 0) { /* NumByteToWrite < EEPROM_PAGESIZE */
+			sEE_DataNum = size;
+			eeprom_write_page(buf, sEE_DataNum, address);
+		} 
+		else { /* NumByteToWrite > EEPROM_PAGESIZE */
+			while (NumOfPage--) {
+				sEE_DataNum = EEPROM_PAGESIZE;
+				eeprom_write_page(buf, sEE_DataNum, address);
+				//delay_ms(5);
+				address +=  EEPROM_PAGESIZE;
+				buf += EEPROM_PAGESIZE;
+			}
+			sEE_DataNum = NumOfSingle;
+			eeprom_write_page(buf, sEE_DataNum, address);
 		}
-		else{
-			EEPR_Buf[MesCount] = SPI2 -> DR;
-			MesCount++;
-			READING_INTERRUPTIONS_ON();
+	} 
+	else { /* WriteAddr is not EEPROM_PAGESIZE aligned  */
+		if (NumOfPage == 0) { /* NumByteToWrite < EEPROM_PAGESIZE */
+			if (NumOfSingle > count) { /* (NumByteToWrite + WriteAddr) > EEPROM_PAGESIZE */
+				temp = NumOfSingle - count;
+				sEE_DataNum = count;
+				eeprom_write_page(buf, sEE_DataNum, address);
+				address +=  count;
+				buf += count;
+				sEE_DataNum = temp;
+				eeprom_write_page(buf, sEE_DataNum, address);
+			} 
+			else {
+				sEE_DataNum = size;
+				eeprom_write_page(buf, sEE_DataNum, address);
+			}
+		} 
+		else { /* NumByteToWrite > EEPROM_PAGESIZE */
+			size -= count;
+			NumOfPage =  size / EEPROM_PAGESIZE;
+			NumOfSingle = size % EEPROM_PAGESIZE;
+			sEE_DataNum = count;
+			eeprom_write_page(buf, sEE_DataNum, address);
+			address +=  count;
+			buf += count;
+			while (NumOfPage--) {
+				sEE_DataNum = EEPROM_PAGESIZE;
+				eeprom_write_page(buf, sEE_DataNum, address);
+				address +=  EEPROM_PAGESIZE;
+				buf += EEPROM_PAGESIZE;
+			}
+			if (NumOfSingle != 0) {
+				sEE_DataNum = NumOfSingle;
+				eeprom_write_page(buf, sEE_DataNum, address);
+			}
 		}
 	}
 }
