@@ -6,13 +6,10 @@
 volatile int16_t OUT_Buffer[2][FRAME_SIZE];
 volatile int16_t *outBuffer;
 
-volatile uint8_t Start_Decoding=0;
+volatile uint8_t Start_Decoding = 0;
 SpeexBits bits;
 void *enc_state, *dec_state;
 int quality = 4, complexity=1, vbr=0, enh=1;
-
-char input_bytes[ENCODED_FRAME_SIZE];
-volatile uint16_t NB_Frames=0;
 
 void Speex_Init(void)
 {
@@ -22,9 +19,11 @@ void Speex_Init(void)
 	outBuffer = OUT_Buffer[0];
 	spi_init();
 }
-
+/*
 void play_message(unsigned char const *array, uint16_t frame_number)
 {
+	char input_bytes[ENCODED_FRAME_SIZE];
+	volatile uint16_t NB_Frames=0;
 	TIM_Cmd(TIM2, ENABLE);
 	NVIC_EnableIRQ(TIM2_IRQn);
 	int i;
@@ -81,10 +80,11 @@ void play_message(unsigned char const *array, uint16_t frame_number)
 	NB_Frames = 0;
 	outBuffer = OUT_Buffer[0];
 }
-
+*/
 
 void play_message_from_eeprom(uint16_t address, uint16_t frame_number){
-	
+	char input_bytes[ENCODED_FRAME_SIZE];
+	volatile uint16_t NB_Frames=0;
 	eeprom_read_buffer((uint8_t *)input_bytes, 20, address);
 	address += 20;
 	speex_bits_read_from(&bits, input_bytes, ENCODED_FRAME_SIZE);

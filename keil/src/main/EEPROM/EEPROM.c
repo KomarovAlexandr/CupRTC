@@ -99,6 +99,7 @@ void eeprom_send_address(uint16_t address){
 }
 
 /*
+*Функиця обычного чтения по адресу из eeprom-а
 */
 void eeprom_write_page(uint8_t *buf, uint16_t size, uint16_t address){
 	eeprom_write_enable();
@@ -119,7 +120,6 @@ void eeprom_read_buffer(uint8_t *buf, uint16_t size, uint16_t address){
 	EEPROM_CS_LOW();
 	eeprom_send_byte(READ);
 	eeprom_send_address(address);
-	//delay_ms(1);
 	//перед чтением буфера очистим регистр приема
 	SPI_I2S_ReceiveData(SPI2);
 	for(int i = 0; i < size; i++){
@@ -127,14 +127,17 @@ void eeprom_read_buffer(uint8_t *buf, uint16_t size, uint16_t address){
 	}
 	EEPROM_CS_HIGH();
 }
-
+/*
+*Функция чтения массива с учетом страниц
+*Данная функция скомунизжена, но работает исправно
+*/
 void eeprom_write_buffer(uint8_t *buf, uint16_t size, uint16_t address){
 	
-	uint16_t NumOfPage = 0, NumOfSingle = 0, Addr = 0, count = 0, temp = 0;
+	uint16_t NumOfPage = 0, NumOfSingle = 0, Addr = 0/*, count = 0, temp = 0*/;
 	uint16_t sEE_DataNum = 0;
 	
 	Addr = address % EEPROM_PAGESIZE;
-	count = EEPROM_PAGESIZE - Addr;
+	//count = EEPROM_PAGESIZE - Addr;
 	NumOfPage =  size / EEPROM_PAGESIZE;
 	NumOfSingle = size % EEPROM_PAGESIZE;
 	if (Addr == 0) { /* WriteAddr is EEPROM_PAGESIZE aligned  */
@@ -153,10 +156,11 @@ void eeprom_write_buffer(uint8_t *buf, uint16_t size, uint16_t address){
 			sEE_DataNum = NumOfSingle;
 			eeprom_write_page(buf, sEE_DataNum, address);
 		}
-	} 
-	else { /* WriteAddr is not EEPROM_PAGESIZE aligned  */
-		if (NumOfPage == 0) { /* NumByteToWrite < EEPROM_PAGESIZE */
-			if (NumOfSingle > count) { /* (NumByteToWrite + WriteAddr) > EEPROM_PAGESIZE */
+	}
+	/*
+	else { // WriteAddr is not EEPROM_PAGESIZE aligned  
+		if (NumOfPage == 0) { // NumByteToWrite < EEPROM_PAGESIZE 
+			if (NumOfSingle > count) { // (NumByteToWrite + WriteAddr) > EEPROM_PAGESIZE 
 				temp = NumOfSingle - count;
 				sEE_DataNum = count;
 				eeprom_write_page(buf, sEE_DataNum, address);
@@ -170,7 +174,7 @@ void eeprom_write_buffer(uint8_t *buf, uint16_t size, uint16_t address){
 				eeprom_write_page(buf, sEE_DataNum, address);
 			}
 		} 
-		else { /* NumByteToWrite > EEPROM_PAGESIZE */
+		else { // NumByteToWrite > EEPROM_PAGESIZE
 			size -= count;
 			NumOfPage =  size / EEPROM_PAGESIZE;
 			NumOfSingle = size % EEPROM_PAGESIZE;
@@ -190,4 +194,5 @@ void eeprom_write_buffer(uint8_t *buf, uint16_t size, uint16_t address){
 			}
 		}
 	}
+*/
 }

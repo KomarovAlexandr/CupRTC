@@ -3,8 +3,8 @@
 //---Инициализация таймера---//
 void Delay_Init (void)
 {
-	RCC -> APB1ENR |= RCC_APB1ENR_TIM4EN;		//подать тактирование на TIM4
-	TIM4 -> CR1 = TIM_CR1_OPM;							//режим одного импульса
+	RCC -> APB1ENR |= RCC_APB1ENR_TIM4EN;  //подать тактирование на TIM4
+	TIM4 -> CR1 = TIM_CR1_OPM;  //режим одного импульса
 }
 
 //---Задержка в миллисекундах---//

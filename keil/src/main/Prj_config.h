@@ -6,7 +6,8 @@
 #define USE_LCD_DISPLAY     //подключение дисплея
 #define USE_SPEEX_SPEAKER   //подключение динамика и кодера
 
-
+#include "uart.h"
+#include "cspeexparser.h"
 
 #ifdef USE_LED_MATRIX
 	#include "ws2812b.h"

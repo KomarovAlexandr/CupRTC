@@ -1,4 +1,4 @@
-;#<FEEDBACK># ARM Linker, 5060750: Last Updated: Wed Sep 25 12:12:06 2019
+;#<FEEDBACK># ARM Linker, 5060750: Last Updated: Mon Oct 21 13:05:54 2019
 ;VERSION 0.2
 ;FILE bits.o
 speex_bits_destroy <= USED 0
@@ -7,7 +7,6 @@ speex_bits_insert_terminator <= USED 0
 speex_bits_nbytes <= USED 0
 speex_bits_peek <= USED 0
 speex_bits_peek_unsigned <= USED 0
-speex_bits_read_from <= USED 0
 speex_bits_read_whole_bytes <= USED 0
 speex_bits_rewind <= USED 0
 speex_bits_set_bit_buffer <= USED 0
@@ -24,6 +23,7 @@ speex_buffer_write <= USED 0
 speex_buffer_writezeros <= USED 0
 ;FILE cb_search.o
 noise_codebook_unquant <= USED 0
+;FILE cspeexparser.o
 ;FILE delay.o
 __asm___7_Delay_c_19c669a7____REV16 <= USED 0
 __asm___7_Delay_c_19c669a7____REVSH <= USED 0
@@ -32,14 +32,7 @@ __asm___7_Delay_c_19c669a7____RRX <= USED 0
 __asm___8_EEPROM_c_SPIinit____REV16 <= USED 0
 __asm___8_EEPROM_c_SPIinit____REVSH <= USED 0
 __asm___8_EEPROM_c_SPIinit____RRX <= USED 0
-eeprom_read_buffer <= USED 0
-eeprom_read_byte <= USED 0
-eeprom_send_address <= USED 0
-eeprom_send_byte <= USED 0
-eeprom_write_buffer <= USED 0
 eeprom_write_disable <= USED 0
-eeprom_write_enable <= USED 0
-eeprom_write_page <= USED 0
 read_status_register <= USED 0
 write_status_register <= USED 0
 ;FILE filters.o
@@ -58,9 +51,9 @@ __asm___5_Lcd_c_rus____RRX <= USED 0
 forced_pitch_quant <= USED 0
 forced_pitch_unquant <= USED 0
 ;FILE main.o
-__asm___6_main_c_main____REV16 <= USED 0
-__asm___6_main_c_main____REVSH <= USED 0
-__asm___6_main_c_main____RRX <= USED 0
+__asm___6_main_c_flag____REV16 <= USED 0
+__asm___6_main_c_flag____REVSH <= USED 0
+__asm___6_main_c_flag____RRX <= USED 0
 ;FILE misc.o
 NVIC_Init <= USED 0
 NVIC_PriorityGroupConfig <= USED 0
@@ -79,7 +72,6 @@ lsp_quant_nb <= USED 0
 lsp_unquant_high <= USED 0
 lsp_unquant_nb <= USED 0
 ;FILE speex.o
-speex_decode_int <= USED 0
 speex_decode_native <= USED 0
 speex_decoder_destroy <= USED 0
 speex_encode_int <= USED 0
@@ -105,8 +97,6 @@ __asm___5_spi_c_spi_init____RRX <= USED 0
 __asm___5_Spx_c_8dddf197____REV16 <= USED 0
 __asm___5_Spx_c_8dddf197____REVSH <= USED 0
 __asm___5_Spx_c_8dddf197____RRX <= USED 0
-play_message <= USED 0
-play_message_from_eeprom <= USED 0
 ;FILE startup_stm32f103xb.o
 ;FILE stm32f10x_dma.o
 DMA_ClearFlag <= USED 0
@@ -132,7 +122,6 @@ GPIO_EventOutputCmd <= USED 0
 GPIO_EventOutputConfig <= USED 0
 GPIO_PinLockConfig <= USED 0
 GPIO_ReadInputData <= USED 0
-GPIO_ReadInputDataBit <= USED 0
 GPIO_ReadOutputData <= USED 0
 GPIO_ReadOutputDataBit <= USED 0
 GPIO_StructInit <= USED 0
@@ -152,7 +141,6 @@ RCC_ClearFlag <= USED 0
 RCC_ClearITPendingBit <= USED 0
 RCC_ClockSecuritySystemCmd <= USED 0
 RCC_DeInit <= USED 0
-RCC_GetClocksFreq <= USED 0
 RCC_GetFlagStatus <= USED 0
 RCC_GetITStatus <= USED 0
 RCC_GetSYSCLKSource <= USED 0
@@ -190,7 +178,6 @@ SPI_I2S_DMACmd <= USED 0
 SPI_I2S_DeInit <= USED 0
 SPI_I2S_GetITStatus <= USED 0
 SPI_I2S_ITConfig <= USED 0
-SPI_I2S_ReceiveData <= USED 0
 SPI_NSSInternalSoftwareConfig <= USED 0
 SPI_SSOutputCmd <= USED 0
 SPI_StructInit <= USED 0
@@ -210,7 +197,6 @@ TIM_ClearOC1Ref <= USED 0
 TIM_ClearOC2Ref <= USED 0
 TIM_ClearOC3Ref <= USED 0
 TIM_ClearOC4Ref <= USED 0
-TIM_Cmd <= USED 0
 TIM_CounterModeConfig <= USED 0
 TIM_CtrlPWMOutputs <= USED 0
 TIM_DMACmd <= USED 0
@@ -291,24 +277,19 @@ USART_ClearFlag <= USED 0
 USART_ClearITPendingBit <= USED 0
 USART_ClockInit <= USED 0
 USART_ClockStructInit <= USED 0
-USART_Cmd <= USED 0
 USART_DMACmd <= USED 0
 USART_DeInit <= USED 0
-USART_GetFlagStatus <= USED 0
 USART_GetITStatus <= USED 0
 USART_HalfDuplexCmd <= USED 0
 USART_ITConfig <= USED 0
-USART_Init <= USED 0
 USART_IrDACmd <= USED 0
 USART_IrDAConfig <= USED 0
 USART_LINBreakDetectLengthConfig <= USED 0
 USART_LINCmd <= USED 0
 USART_OneBitMethodCmd <= USED 0
 USART_OverSampling8Cmd <= USED 0
-USART_ReceiveData <= USED 0
 USART_ReceiverWakeUpCmd <= USED 0
 USART_SendBreak <= USED 0
-USART_SendData <= USED 0
 USART_SetAddress <= USED 0
 USART_SetGuardTime <= USED 0
 USART_SetPrescaler <= USED 0
@@ -324,6 +305,10 @@ SystemCoreClockUpdate <= USED 0
 __asm___18_system_stm32f10x_c_5d646a67____REV16 <= USED 0
 __asm___18_system_stm32f10x_c_5d646a67____REVSH <= USED 0
 __asm___18_system_stm32f10x_c_5d646a67____RRX <= USED 0
+;FILE uart.o
+__asm___6_uart_c_7fdd38d6____REV16 <= USED 0
+__asm___6_uart_c_7fdd38d6____REVSH <= USED 0
+__asm___6_uart_c_7fdd38d6____RRX <= USED 0
 ;FILE vq.o
 vq_nbest_sign <= USED 0
 ;FILE ws2812b.o

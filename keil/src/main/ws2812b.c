@@ -7,7 +7,6 @@
 //Сигнал RET или RESET более 50мкс
 #define WS2812B_TIMER_RET				(WS2812B_TIMER_AAR * 45)
 
-
 #define GPIO_CRL_CNFx						GPIO_CRL_CNF6
 #define GPIO_CRL_CNFx_1					GPIO_CRL_CNF6_1
 #define GPIO_CRL_MODEx_1				GPIO_CRL_MODE6_1

@@ -421,6 +421,16 @@
               <FileType>1</FileType>
               <FilePath>.\src\main\EEPROM\EEPROM.c</FilePath>
             </File>
+            <File>
+              <FileName>uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>cspeexparser.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\main\cspeexparser.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

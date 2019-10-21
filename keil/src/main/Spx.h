@@ -8,7 +8,7 @@
 
 void Speex_Init(void);
 
-void play_message(unsigned char const *array, uint16_t frame_number);
+//void play_message(unsigned char const *array, uint16_t frame_number);
 
 void play_message_from_eeprom(uint16_t address, uint16_t frame_number);
 

@@ -2,7 +2,7 @@
 
 #ifdef USE_LED_MATRIX
 
-volatile struct rgb_struct rgb;          //структура для получения цветов после перевода HSV->RGB
+volatile struct rgb_struct rgb;  //структура для получения цветов после перевода HSV->RGB
 
 void Mode_1(void);
 void Mode_2(void);
@@ -127,29 +127,6 @@ void Mode_3(void){
 		}
 		delay_ms(300);
 	}
-}
-
-void InitButtom(void){
-	RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
-	GPIO_InitTypeDef ResetButtom;
-	ResetButtom.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-	ResetButtom.GPIO_Pin = GPIO_Pin_1;
-	ResetButtom.GPIO_Speed = GPIO_Speed_10MHz;
-	GPIO_Init( GPIOA, &ResetButtom);
-	
-	EXTI->IMR |= EXTI_IMR_MR1;
-	EXTI->RTSR |= EXTI_RTSR_TR1;
-	NVIC_EnableIRQ (EXTI1_IRQn);
-}
-
-void EXTI1_IRQHandler(void)
-{
-	NVIC_DisableIRQ (EXTI1_IRQn);
-	EXTI->PR|=0x02;
-	delay_ms(50);
-	Led_mode ++;
-	if(Led_mode > Number_of_Led_modes) Led_mode = 0;
-	NVIC_EnableIRQ (EXTI1_IRQn);
 }
 
 #endif
