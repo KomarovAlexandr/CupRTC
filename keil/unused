@@ -1,4 +1,4 @@
-;#<FEEDBACK># ARM Linker, 5060750: Last Updated: Mon Oct 21 13:05:54 2019
+;#<FEEDBACK># ARM Linker, 5060750: Last Updated: Mon Oct 21 14:26:00 2019
 ;VERSION 0.2
 ;FILE bits.o
 speex_bits_destroy <= USED 0
@@ -35,16 +35,37 @@ __asm___8_EEPROM_c_SPIinit____RRX <= USED 0
 eeprom_write_disable <= USED 0
 read_status_register <= USED 0
 write_status_register <= USED 0
+;FILE event_groups.o
+vEventGroupClearBitsCallback <= USED 0
+vEventGroupDelete <= USED 0
+vEventGroupSetBitsCallback <= USED 0
+xEventGroupClearBits <= USED 0
+xEventGroupCreate <= USED 0
+xEventGroupGetBitsFromISR <= USED 0
+xEventGroupSetBits <= USED 0
+xEventGroupSync <= USED 0
+xEventGroupWaitBits <= USED 0
 ;FILE filters.o
 qmf_decomp <= USED 0
 qmf_synth <= USED 0
 syn_percep_zero16 <= USED 0
+;FILE heap_2.o
+pvPortMalloc <= USED 0
+vPortFree <= USED 0
+vPortInitialiseBlocks <= USED 0
+xPortGetFreeHeapSize <= USED 0
 ;FILE lcd.o
 Cleaning <= USED 0
 PrintVar <= USED 0
 __asm___5_Lcd_c_rus____REV16 <= USED 0
 __asm___5_Lcd_c_rus____REVSH <= USED 0
 __asm___5_Lcd_c_rus____RRX <= USED 0
+;FILE list.o
+uxListRemove <= USED 0
+vListInitialise <= USED 0
+vListInitialiseItem <= USED 0
+vListInsert <= USED 0
+vListInsertEnd <= USED 0
 ;FILE lpc.o
 ;FILE lsp.o
 ;FILE ltp.o
@@ -66,11 +87,43 @@ __asm___6_misc_c_d0fc1254____RRX <= USED 0
 ;FILE modes.o
 speex_mode_query <= USED 0
 ;FILE nb_celp.o
+;FILE port.o
+__asm___6_port_c_39a90d8d__prvStartFirstTask <= USED 0
+pxPortInitialiseStack <= USED 0
+vPortEndScheduler <= USED 0
+vPortEnterCritical <= USED 0
+vPortExitCritical <= USED 0
+vPortGetIPSR <= USED 0
+vPortSetupTimerInterrupt <= USED 0
+vPortValidateInterruptPriority <= USED 0
+xPortStartScheduler <= USED 0
+xPortSysTickHandler <= USED 0
 ;FILE quant_lsp.o
 lsp_quant_high <= USED 0
 lsp_quant_nb <= USED 0
 lsp_unquant_high <= USED 0
 lsp_unquant_nb <= USED 0
+;FILE queue.o
+pcQueueGetName <= USED 0
+uxQueueMessagesWaiting <= USED 0
+uxQueueMessagesWaitingFromISR <= USED 0
+uxQueueSpacesAvailable <= USED 0
+vQueueAddToRegistry <= USED 0
+vQueueDelete <= USED 0
+vQueueUnregisterQueue <= USED 0
+xQueueCreateMutex <= USED 0
+xQueueGenericCreate <= USED 0
+xQueueGenericReset <= USED 0
+xQueueGenericSend <= USED 0
+xQueueGenericSendFromISR <= USED 0
+xQueueGiveFromISR <= USED 0
+xQueueIsQueueEmptyFromISR <= USED 0
+xQueueIsQueueFullFromISR <= USED 0
+xQueuePeek <= USED 0
+xQueuePeekFromISR <= USED 0
+xQueueReceive <= USED 0
+xQueueReceiveFromISR <= USED 0
+xQueueSemaphoreTake <= USED 0
 ;FILE speex.o
 speex_decode_native <= USED 0
 speex_decoder_destroy <= USED 0
@@ -300,11 +353,67 @@ USART_WakeUpConfig <= USED 0
 __asm___17_stm32f10x_usart_c_9565154b____REV16 <= USED 0
 __asm___17_stm32f10x_usart_c_9565154b____REVSH <= USED 0
 __asm___17_stm32f10x_usart_c_9565154b____RRX <= USED 0
+;FILE stream_buffer.o
+vStreamBufferDelete <= USED 0
+xStreamBufferBytesAvailable <= USED 0
+xStreamBufferGenericCreate <= USED 0
+xStreamBufferIsEmpty <= USED 0
+xStreamBufferIsFull <= USED 0
+xStreamBufferNextMessageLengthBytes <= USED 0
+xStreamBufferReceive <= USED 0
+xStreamBufferReceiveCompletedFromISR <= USED 0
+xStreamBufferReceiveFromISR <= USED 0
+xStreamBufferReset <= USED 0
+xStreamBufferSend <= USED 0
+xStreamBufferSendCompletedFromISR <= USED 0
+xStreamBufferSendFromISR <= USED 0
+xStreamBufferSetTriggerLevel <= USED 0
+xStreamBufferSpacesAvailable <= USED 0
 ;FILE system_stm32f10x.o
 SystemCoreClockUpdate <= USED 0
 __asm___18_system_stm32f10x_c_5d646a67____REV16 <= USED 0
 __asm___18_system_stm32f10x_c_5d646a67____REVSH <= USED 0
 __asm___18_system_stm32f10x_c_5d646a67____RRX <= USED 0
+;FILE tasks.o
+pcTaskGetName <= USED 0
+pvTaskIncrementMutexHeldCount <= USED 0
+ulTaskNotifyTake <= USED 0
+uxTaskGetNumberOfTasks <= USED 0
+uxTaskPriorityGet <= USED 0
+uxTaskPriorityGetFromISR <= USED 0
+uxTaskResetEventItemValue <= USED 0
+vTaskDelay <= USED 0
+vTaskDelete <= USED 0
+vTaskEndScheduler <= USED 0
+vTaskInternalSetTimeOutState <= USED 0
+vTaskMissedYield <= USED 0
+vTaskNotifyGiveFromISR <= USED 0
+vTaskPlaceOnEventList <= USED 0
+vTaskPlaceOnUnorderedEventList <= USED 0
+vTaskPriorityDisinheritAfterTimeout <= USED 0
+vTaskPrioritySet <= USED 0
+vTaskRemoveFromUnorderedEventList <= USED 0
+vTaskResume <= USED 0
+vTaskSetTimeOutState <= USED 0
+vTaskStartScheduler <= USED 0
+vTaskSuspend <= USED 0
+vTaskSuspendAll <= USED 0
+xTaskCheckForTimeOut <= USED 0
+xTaskCreate <= USED 0
+xTaskGenericNotify <= USED 0
+xTaskGenericNotifyFromISR <= USED 0
+xTaskGetCurrentTaskHandle <= USED 0
+xTaskGetSchedulerState <= USED 0
+xTaskGetTickCount <= USED 0
+xTaskGetTickCountFromISR <= USED 0
+xTaskIncrementTick <= USED 0
+xTaskNotifyStateClear <= USED 0
+xTaskNotifyWait <= USED 0
+xTaskPriorityDisinherit <= USED 0
+xTaskPriorityInherit <= USED 0
+xTaskRemoveFromEventList <= USED 0
+xTaskResumeAll <= USED 0
+xTaskResumeFromISR <= USED 0
 ;FILE uart.o
 __asm___6_uart_c_7fdd38d6____REV16 <= USED 0
 __asm___6_uart_c_7fdd38d6____REVSH <= USED 0

@@ -6,6 +6,10 @@
 
 #include "Prj_config.h"
 
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+
 void InitButtom(void);
 void nvic_buttom_enable(void);
 extern uint8_t Led_mode;
