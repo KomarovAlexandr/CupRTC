@@ -92,7 +92,12 @@
     extern uint32_t SystemCoreClock;
 #endif
 
-#define configUSE_PREEMPTION                     1
+#define vPortSVCHandler SVC_Handler
+#define xPortPendSVHandler PendSV_Handler
+#define vPortSVCHandler SVC_Handler
+#define xPortSysTickHandler SysTick_Handler
+
+#define configUSE_PREEMPTION                     0
 #define configSUPPORT_STATIC_ALLOCATION          0
 #define configSUPPORT_DYNAMIC_ALLOCATION         1
 #define configUSE_IDLE_HOOK                      0
@@ -122,6 +127,7 @@ to exclude the API function. */
 #define INCLUDE_vTaskDelayUntil             0
 #define INCLUDE_vTaskDelay                  1
 #define INCLUDE_xTaskGetSchedulerState      1
+#define INCLUDE_xTaskResumeFromISR          1
 
 /* Cortex-M specific definitions. */
 #ifdef __NVIC_PRIO_BITS
@@ -139,14 +145,14 @@ function. */
 routine that makes calls to interrupt safe FreeRTOS API functions.  DO NOT CALL
 INTERRUPT SAFE FREERTOS API FUNCTIONS FROM ANY INTERRUPT THAT HAS A HIGHER
 PRIORITY THAN THIS! (higher priorities are lower numeric values. */
-#define configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY 5
+#define configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY   5
 
 /* Interrupt priorities used by the kernel port layer itself.  These are generic
 to all Cortex-M ports, and do not rely on any particular library functions. */
 #define configKERNEL_INTERRUPT_PRIORITY 		( configLIBRARY_LOWEST_INTERRUPT_PRIORITY << (8 - configPRIO_BITS) )
 /* !!!! configMAX_SYSCALL_INTERRUPT_PRIORITY must not be set to zero !!!!
 See http://www.FreeRTOS.org/RTOS-Cortex-M3-M4.html. */
-#define configMAX_SYSCALL_INTERRUPT_PRIORITY 	( configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY << (8 - configPRIO_BITS) )
+#define configMAX_SYSCALL_INTERRUPT_PRIORITY  		( configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY << (8 - configPRIO_BITS) )
 
 /* Normal assert() semantics without relying on the provision of an assert.h
 header file. */

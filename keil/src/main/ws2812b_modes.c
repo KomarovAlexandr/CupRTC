@@ -30,16 +30,15 @@ void Turn_on_Led_mode(uint8_t mode){
 }
 //---Режим 1---//
 void Mode_1(void){
-	int H = 0;
-	for( H = 0; H <= 360; H++){                 //перебераем H от 0 до 360
-		HSV(H, 255, 130);
-		for(int i = 0; i < WS2812B_NUM_LEDS; i++){
-			ws2812b_set(i, rgb.r, rgb.g, rgb.b);
-		}
-		while(!ws2812b_is_ready());
-		ws2812b_send();
-		delay_ms(15);
+	static int H = 0;
+	H++;
+	HSV(H, 255, 130);
+	for(int i = 0; i < WS2812B_NUM_LEDS; i++){
+		ws2812b_set(i, rgb.r, rgb.g, rgb.b);
 	}
+	while(!ws2812b_is_ready());
+	ws2812b_send();
+	if(H >= 360) H = 0;
 }
 
 //---Доп функция для режима 2---//
@@ -48,18 +47,22 @@ void Mode_2_buffer_fill(int H1, int H2, int H3, int H4, int V){  //функци�
 	for( i = 0; i < 2; i++){    //в каждую группу загружаем свой цвет
 			HSV(H1, 255, V);
 			ws2812b_set(i, rgb.r, rgb.g, rgb.b);
+			taskYIELD();
 		}
 		for( i = 2; i < 5; i++){
 			HSV(H2, 255, V);
 			ws2812b_set(i, rgb.r, rgb.g, rgb.b);
+			taskYIELD();
 		}
 		for( i = 5; i < 7; i++){
 			HSV(H3, 255, V);
 			ws2812b_set(i, rgb.r, rgb.g, rgb.b);
+			taskYIELD();
 		}
 		for( i = 7; i < 9; i++){
 			HSV(H4, 255, V);
 			ws2812b_set(i, rgb.r, rgb.g, rgb.b);
+			taskYIELD();
 		}
 }
 
@@ -70,19 +73,22 @@ void Mode_2(void){
 	int H3 = (rand() % 360);  //для третьей группы   (2 св)
 	int H4 = (rand() % 360);  //для четвертой группы (2 св)
 	srand(rand());
+	taskYIELD();
 	//в каждом цикле зажечь-погасить новые цвета для каждой группы,
 	//получаемые рандомом
-	for( int V = 0; V <= 130; V++){               //зажигаем и гасим светожиоды 
+	for( int V = 0; V <= 180; V++){               //зажигаем и гасим светожиоды 
 		Mode_2_buffer_fill(H1, H2, H3, H4, V);      //с выбранным значением Н для
 		while(!ws2812b_is_ready());                 //каждой группы
 		ws2812b_send();
-		delay_ms(10);
+		osDelay(10);
+		taskYIELD();
 	}
-	for( int V = 130; V >= 0; V--){
+	for( int V = 180; V >= 0; V--){
 		Mode_2_buffer_fill(H1, H2, H3, H4, V);
 		while(!ws2812b_is_ready());
 		ws2812b_send();
-		delay_ms(10);
+		osDelay(10);
+		taskYIELD();
 	}
 }
 
@@ -97,6 +103,7 @@ void Shift_led(void){                                   //ф-ция сдвига
 		led_array_1[i] = led_array_1[i + 3];
 		led_array_1[i + 1] = led_array_1[i + 3 + 1];
 		led_array_1[i + 2] = led_array_1[i + 3 + 2];
+		taskYIELD();
 	}
 	led_array_1[WS2812B_NUM_LEDS * 3 - 3] = x_r;          //первый цвет теперь становится последним
 	led_array_1[WS2812B_NUM_LEDS * 3 - 2] = x_g;
@@ -114,18 +121,20 @@ void Mode_3(void){
 			led_array_1[(H / 40) * 3] = rgb.r;         //цвигаться по светодиодам
 			led_array_1[(H / 40) * 3 + 1] = rgb.g;
 			led_array_1[(H / 40) * 3 + 2] = rgb.b;
+			taskYIELD();
 		}
 		flag = 0;
 	}
-	
 	for(int i = 0; i < WS2812B_NUM_LEDS; i++){     //на каждой новой итерации делаем сдвиг эл-ов
 		while(!ws2812b_is_ready());                  //массива на одну возицию
 		ws2812b_send();
 		Shift_led(); //ф-ция сдвига
+		taskYIELD();
 		for(int j = 0; j < WS2812B_NUM_LEDS; j++){
 			ws2812b_set(j, led_array_1[j*3], led_array_1[j*3 + 1], led_array_1[j*3 + 2]);
+			taskYIELD();
 		}
-		delay_ms(300);
+		osDelay(300);
 	}
 }
 

@@ -19,7 +19,7 @@ void spi_init(void){
 	spi2.SPI_CPOL = SPI_CPOL_Low;
 	spi2.SPI_CPHA = SPI_CPHA_1Edge;
 	spi2.SPI_NSS = SPI_NSS_Soft;
-	spi2.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
+	spi2.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_4;
 	spi2.SPI_FirstBit = SPI_FirstBit_MSB;
 	spi2.SPI_CRCPolynomial = 10;
 	SPI_Init(SPI2, &spi2);
@@ -54,15 +54,19 @@ void spi_init(void){
 	Tim2.TIM_Period = 1;
 	Tim2.TIM_CounterMode = TIM_CounterMode_Up;
 	TIM_TimeBaseInit(TIM2, &Tim2);
+	NVIC_SetPriority(TIM2_IRQn, 0);
 	
 	TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
 	//TIM_Cmd(TIM2, ENABLE);
 }
 
+extern uint8_t interrupt_flag;
+
 void TIM2_IRQHandler(){
 	NVIC_DisableIRQ(TIM2_IRQn);
-	TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
 	
+	//UBaseType_t uxSavedInterruptStatus = taskENTER_CRITICAL_FROM_ISR();
+	TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
 	//Читаем из текущего буфера значение;
 	//понижаем его разрядность и прибавляем 512, поскольку
 	//в буфере число со знаком;
@@ -90,7 +94,7 @@ void TIM2_IRQHandler(){
 	{
 		outBuffer++;
 	}
-	//TIM_Cmd(TIM2, ENABLE);
+	//taskEXIT_CRITICAL_FROM_ISR(uxSavedInterruptStatus);
 	NVIC_EnableIRQ(TIM2_IRQn);
 }
 

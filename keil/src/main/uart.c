@@ -21,7 +21,7 @@ void Usart_Init(void){
 	GPIO_Init(GPIOA, &RxTx);
 	
 	USART_InitTypeDef Usart;
-	Usart.USART_BaudRate = 9600;
+	Usart.USART_BaudRate = 19200;
 	Usart.USART_WordLength = USART_WordLength_8b;
 	Usart.USART_StopBits = USART_StopBits_1;
 	Usart.USART_Parity = USART_Parity_No;
@@ -53,6 +53,7 @@ void Receiving_Data_Usart(void){
 	uint16_t address_spx = 0;
 	uint16_t address_buf = 0;
 	uint8_t desc = 0;
+	uint8_t numb_of_text = 1;
 	while(desc != 4){ //пока не придет сообщение с компа об окончании передачи
 		desc = recv(Usart_read_arr, &statePackage, &textPackage, &speexPackage, &fbPackage);
 		switch(desc){
@@ -64,9 +65,15 @@ void Receiving_Data_Usart(void){
 				break;
 			// работа с текстами: textPackage.textnum, textPackage.text
 			case 2:
-				eeprom_write_enable();
-				eeprom_write_buffer(textPackage.text, 1, TEXT1_ADDRESS);
-				sendFeedback(Usart_send_array, 0);
+				if(numb_of_text <= NUMB_OF_TEXT){
+					eeprom_write_enable();
+					eeprom_write_buffer(textPackage.text, MAX_TEXT_SIZE, TEXT_ADDRESS * numb_of_text);
+					numb_of_text ++;
+					sendFeedback(Usart_send_array, 0);
+				}
+				else{
+					sendFeedback(Usart_send_array, 0);
+				}
 				break;
 			// работа с блоком speex: speexPackage.data
 			case 3:

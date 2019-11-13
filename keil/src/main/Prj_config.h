@@ -1,5 +1,8 @@
 #ifndef PRJ_CONFIG_H
 #define PRJ_CONFIG_H
+#include "buttom.h"
+#include "freertos.h"
+#include "include/cmsis_os.h"
 
 /*общие настройки проекта*/
 #define USE_LED_MATRIX      //подключение светодиодов

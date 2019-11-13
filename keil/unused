@@ -1,4 +1,4 @@
-;#<FEEDBACK># ARM Linker, 5060750: Last Updated: Mon Oct 21 14:26:00 2019
+;#<FEEDBACK># ARM Linker, 5060750: Last Updated: Wed Nov 13 18:39:43 2019
 ;VERSION 0.2
 ;FILE bits.o
 speex_bits_destroy <= USED 0
@@ -7,6 +7,7 @@ speex_bits_insert_terminator <= USED 0
 speex_bits_nbytes <= USED 0
 speex_bits_peek <= USED 0
 speex_bits_peek_unsigned <= USED 0
+speex_bits_read_from <= USED 0
 speex_bits_read_whole_bytes <= USED 0
 speex_bits_rewind <= USED 0
 speex_bits_set_bit_buffer <= USED 0
@@ -21,8 +22,68 @@ speex_buffer_read <= USED 0
 speex_buffer_resize <= USED 0
 speex_buffer_write <= USED 0
 speex_buffer_writezeros <= USED 0
+;FILE buttom.o
+AntiContactBounce <= USED 0
+__asm___8_buttom_c_d7660890____REV16 <= USED 0
+__asm___8_buttom_c_d7660890____REVSH <= USED 0
+__asm___8_buttom_c_d7660890____RRX <= USED 0
 ;FILE cb_search.o
 noise_codebook_unquant <= USED 0
+;FILE cmsis_os.o
+__asm___10_cmsis_os_c_9292335d____REV16 <= USED 0
+__asm___10_cmsis_os_c_9292335d____REVSH <= USED 0
+__asm___10_cmsis_os_c_9292335d____RRX <= USED 0
+osAbortDelay <= USED 0
+osDelayUntil <= USED 0
+osKernelRunning <= USED 0
+osKernelSysTick <= USED 0
+osMailAlloc <= USED 0
+osMailCAlloc <= USED 0
+osMailCreate <= USED 0
+osMailFree <= USED 0
+osMailGet <= USED 0
+osMailPut <= USED 0
+osMessageAvailableSpace <= USED 0
+osMessageCreate <= USED 0
+osMessageDelete <= USED 0
+osMessageGet <= USED 0
+osMessagePeek <= USED 0
+osMessagePut <= USED 0
+osMessageWaiting <= USED 0
+osMutexCreate <= USED 0
+osMutexDelete <= USED 0
+osMutexRelease <= USED 0
+osMutexWait <= USED 0
+osPoolAlloc <= USED 0
+osPoolCAlloc <= USED 0
+osPoolCreate <= USED 0
+osPoolFree <= USED 0
+osRecursiveMutexCreate <= USED 0
+osRecursiveMutexRelease <= USED 0
+osRecursiveMutexWait <= USED 0
+osSemaphoreCreate <= USED 0
+osSemaphoreDelete <= USED 0
+osSemaphoreGetCount <= USED 0
+osSemaphoreRelease <= USED 0
+osSemaphoreWait <= USED 0
+osSignalSet <= USED 0
+osSignalWait <= USED 0
+osSystickHandler <= USED 0
+osThreadCreate <= USED 0
+osThreadGetId <= USED 0
+osThreadGetPriority <= USED 0
+osThreadList <= USED 0
+osThreadResume <= USED 0
+osThreadResumeAll <= USED 0
+osThreadSetPriority <= USED 0
+osThreadSuspend <= USED 0
+osThreadSuspendAll <= USED 0
+osThreadTerminate <= USED 0
+osThreadYield <= USED 0
+osTimerCreate <= USED 0
+osTimerDelete <= USED 0
+osTimerStart <= USED 0
+osTimerStop <= USED 0
 ;FILE cspeexparser.o
 ;FILE delay.o
 __asm___7_Delay_c_19c669a7____REV16 <= USED 0
@@ -49,9 +110,13 @@ xEventGroupWaitBits <= USED 0
 qmf_decomp <= USED 0
 qmf_synth <= USED 0
 syn_percep_zero16 <= USED 0
+;FILE freertos.o
+StartButtonTask <= USED 0
+StartRGBws2812bTask <= USED 0
+__asm___10_freertos_c_b8801e39____REV16 <= USED 0
+__asm___10_freertos_c_b8801e39____REVSH <= USED 0
+__asm___10_freertos_c_b8801e39____RRX <= USED 0
 ;FILE heap_2.o
-pvPortMalloc <= USED 0
-vPortFree <= USED 0
 vPortInitialiseBlocks <= USED 0
 xPortGetFreeHeapSize <= USED 0
 ;FILE lcd.o
@@ -61,20 +126,15 @@ __asm___5_Lcd_c_rus____REV16 <= USED 0
 __asm___5_Lcd_c_rus____REVSH <= USED 0
 __asm___5_Lcd_c_rus____RRX <= USED 0
 ;FILE list.o
-uxListRemove <= USED 0
-vListInitialise <= USED 0
-vListInitialiseItem <= USED 0
-vListInsert <= USED 0
-vListInsertEnd <= USED 0
 ;FILE lpc.o
 ;FILE lsp.o
 ;FILE ltp.o
 forced_pitch_quant <= USED 0
 forced_pitch_unquant <= USED 0
 ;FILE main.o
-__asm___6_main_c_flag____REV16 <= USED 0
-__asm___6_main_c_flag____REVSH <= USED 0
-__asm___6_main_c_flag____RRX <= USED 0
+__asm___6_main_c_main____REV16 <= USED 0
+__asm___6_main_c_main____REVSH <= USED 0
+__asm___6_main_c_main____RRX <= USED 0
 ;FILE misc.o
 NVIC_Init <= USED 0
 NVIC_PriorityGroupConfig <= USED 0
@@ -88,16 +148,9 @@ __asm___6_misc_c_d0fc1254____RRX <= USED 0
 speex_mode_query <= USED 0
 ;FILE nb_celp.o
 ;FILE port.o
-__asm___6_port_c_39a90d8d__prvStartFirstTask <= USED 0
-pxPortInitialiseStack <= USED 0
 vPortEndScheduler <= USED 0
-vPortEnterCritical <= USED 0
-vPortExitCritical <= USED 0
 vPortGetIPSR <= USED 0
-vPortSetupTimerInterrupt <= USED 0
 vPortValidateInterruptPriority <= USED 0
-xPortStartScheduler <= USED 0
-xPortSysTickHandler <= USED 0
 ;FILE quant_lsp.o
 lsp_quant_high <= USED 0
 lsp_quant_nb <= USED 0
@@ -112,9 +165,6 @@ vQueueAddToRegistry <= USED 0
 vQueueDelete <= USED 0
 vQueueUnregisterQueue <= USED 0
 xQueueCreateMutex <= USED 0
-xQueueGenericCreate <= USED 0
-xQueueGenericReset <= USED 0
-xQueueGenericSend <= USED 0
 xQueueGenericSendFromISR <= USED 0
 xQueueGiveFromISR <= USED 0
 xQueueIsQueueEmptyFromISR <= USED 0
@@ -123,8 +173,8 @@ xQueuePeek <= USED 0
 xQueuePeekFromISR <= USED 0
 xQueueReceive <= USED 0
 xQueueReceiveFromISR <= USED 0
-xQueueSemaphoreTake <= USED 0
 ;FILE speex.o
+speex_decode_int <= USED 0
 speex_decode_native <= USED 0
 speex_decoder_destroy <= USED 0
 speex_encode_int <= USED 0
@@ -150,6 +200,8 @@ __asm___5_spi_c_spi_init____RRX <= USED 0
 __asm___5_Spx_c_8dddf197____REV16 <= USED 0
 __asm___5_Spx_c_8dddf197____REVSH <= USED 0
 __asm___5_Spx_c_8dddf197____RRX <= USED 0
+play_message <= USED 0
+play_message_from_eeprom <= USED 0
 ;FILE startup_stm32f103xb.o
 ;FILE stm32f10x_dma.o
 DMA_ClearFlag <= USED 0
@@ -250,6 +302,7 @@ TIM_ClearOC1Ref <= USED 0
 TIM_ClearOC2Ref <= USED 0
 TIM_ClearOC3Ref <= USED 0
 TIM_ClearOC4Ref <= USED 0
+TIM_Cmd <= USED 0
 TIM_CounterModeConfig <= USED 0
 TIM_CtrlPWMOutputs <= USED 0
 TIM_DMACmd <= USED 0
@@ -341,8 +394,10 @@ USART_LINBreakDetectLengthConfig <= USED 0
 USART_LINCmd <= USED 0
 USART_OneBitMethodCmd <= USED 0
 USART_OverSampling8Cmd <= USED 0
+USART_ReceiveData <= USED 0
 USART_ReceiverWakeUpCmd <= USED 0
 USART_SendBreak <= USED 0
+USART_SendData <= USED 0
 USART_SetAddress <= USED 0
 USART_SetGuardTime <= USED 0
 USART_SetPrescaler <= USED 0
@@ -376,55 +431,51 @@ __asm___18_system_stm32f10x_c_5d646a67____REVSH <= USED 0
 __asm___18_system_stm32f10x_c_5d646a67____RRX <= USED 0
 ;FILE tasks.o
 pcTaskGetName <= USED 0
-pvTaskIncrementMutexHeldCount <= USED 0
 ulTaskNotifyTake <= USED 0
 uxTaskGetNumberOfTasks <= USED 0
 uxTaskPriorityGet <= USED 0
 uxTaskPriorityGetFromISR <= USED 0
 uxTaskResetEventItemValue <= USED 0
-vTaskDelay <= USED 0
 vTaskDelete <= USED 0
 vTaskEndScheduler <= USED 0
-vTaskInternalSetTimeOutState <= USED 0
-vTaskMissedYield <= USED 0
 vTaskNotifyGiveFromISR <= USED 0
-vTaskPlaceOnEventList <= USED 0
 vTaskPlaceOnUnorderedEventList <= USED 0
-vTaskPriorityDisinheritAfterTimeout <= USED 0
 vTaskPrioritySet <= USED 0
 vTaskRemoveFromUnorderedEventList <= USED 0
 vTaskResume <= USED 0
 vTaskSetTimeOutState <= USED 0
-vTaskStartScheduler <= USED 0
 vTaskSuspend <= USED 0
-vTaskSuspendAll <= USED 0
-xTaskCheckForTimeOut <= USED 0
-xTaskCreate <= USED 0
 xTaskGenericNotify <= USED 0
 xTaskGenericNotifyFromISR <= USED 0
 xTaskGetCurrentTaskHandle <= USED 0
-xTaskGetSchedulerState <= USED 0
 xTaskGetTickCount <= USED 0
 xTaskGetTickCountFromISR <= USED 0
-xTaskIncrementTick <= USED 0
 xTaskNotifyStateClear <= USED 0
 xTaskNotifyWait <= USED 0
-xTaskPriorityDisinherit <= USED 0
-xTaskPriorityInherit <= USED 0
-xTaskRemoveFromEventList <= USED 0
-xTaskResumeAll <= USED 0
 xTaskResumeFromISR <= USED 0
 ;FILE uart.o
+Usart_read_arr <= USED 0
+Usart_send_array <= USED 0
 __asm___6_uart_c_7fdd38d6____REV16 <= USED 0
 __asm___6_uart_c_7fdd38d6____REVSH <= USED 0
 __asm___6_uart_c_7fdd38d6____RRX <= USED 0
 ;FILE vq.o
 vq_nbest_sign <= USED 0
 ;FILE ws2812b.o
+HSV <= USED 0
 __asm___9_ws2812b_c_dbfc8092____REV16 <= USED 0
 __asm___9_ws2812b_c_dbfc8092____REVSH <= USED 0
 __asm___9_ws2812b_c_dbfc8092____RRX <= USED 0
+ws2812b_is_ready <= USED 0
+ws2812b_send <= USED 0
+ws2812b_set <= USED 0
 ;FILE ws2812b_modes.o
+Mode_1 <= USED 0
+Mode_2 <= USED 0
+Mode_2_buffer_fill <= USED 0
+Mode_3 <= USED 0
+Shift_led <= USED 0
+Turn_on_Led_mode <= USED 0
 __asm___15_ws2812b_modes_c_Led_mode____REV16 <= USED 0
 __asm___15_ws2812b_modes_c_Led_mode____REVSH <= USED 0
 __asm___15_ws2812b_modes_c_Led_mode____RRX <= USED 0

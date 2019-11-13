@@ -1,14 +1,13 @@
 #ifndef CSPEEXPARCER_H
 #define CSPEEXPARCER_H
 #include "stdint.h"
-#define MAX_TEXT_SIZE       21
+#define MAX_TEXT_SIZE       100
 #define SPEEX_BLOCK_SIZE    20
 
 #define STATE_ADDRESS 0x0000
-#define TEXT1_ADDRESS 0x0020
-#define TEXT2_ADDRESS 0x0040
-#define TEXT3_ADDRESS 0x0060
-#define SPEEX_ADDRESS 0x0080
+#define TEXT_ADDRESS  0x0020
+#define NUMB_OF_TEXT  8
+#define SPEEX_ADDRESS 0x0120
 
 typedef struct
 {

@@ -14,7 +14,6 @@
 #define			LCM_OUT_B				GPIOB->ODR
 
 const char rus[] = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя";
-
 											//А    Б     В    Г    Д    Е    Ё
 const uint8_t RUS[66]={0x41,0xA0,0x42,0xA1,0xE0,0x45,0xA2,
 											//Ж    З    И    Й    К    Л    М
@@ -42,6 +41,7 @@ void PulseLCD()
 	LCM_OUT_A |= LCM_PIN_EN;     //ставим бит Е и ждем 2мкс
 	delay_us(2);
 	LCM_OUT_A &= (~LCM_PIN_EN);  //потом снимаем
+	taskYIELD();
 }
 
 //---Отсылка байта в дисплей---//
@@ -62,7 +62,7 @@ void SendByte(char ByteToSend, int IsData)
 	}
 	PulseLCD();                 //отправляем старший полубайт
 	delay_us(5);
-	
+	taskYIELD();
 	LCM_OUT_A &= ~(LCM_PIN_MASK_A);           //выкавыриваем младший полубайт
 	LCM_OUT_B &= ~(LCM_PIN_MASK_B);           //также расставлем биты по своим
 	LCM_OUT_A |= ((ByteToSend & 0x1)) << 12;  //позициям
@@ -77,7 +77,7 @@ void SendByte(char ByteToSend, int IsData)
 		delay_us(4);
 	}
 	PulseLCD();                     //отправляем младший полубайт
-	delay_ms(5);
+	osDelay(5);
 	
 	LCM_OUT_A &= ~(LCM_PIN_MASK_A); //зачищаем используемые ноги
 	LCM_OUT_B &= ~(LCM_PIN_MASK_B); //на обоих портах
@@ -99,8 +99,56 @@ void Cursor(char Row, char Col)
 void ClearLCDScreen()
 {
 	SendByte(0x01, 0); //команда с одной единичкой
-	delay_ms(3);
+	osDelay(3);
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//---Импульс на ноге Е для записи дисплеем заданных параметров---//
+void PulseLCD_1()
+{
+	LCM_OUT_A |= LCM_PIN_EN;     //ставим бит Е и ждем 2мкс
+	delay_us(2);
+	LCM_OUT_A &= (~LCM_PIN_EN);  //потом снимаем
+}
+
+//---Отсылка байта в дисплей---//
+void SendByte_1(char ByteToSend, int IsData)
+{
+	LCM_OUT_A &= ~(LCM_PIN_MASK_A);               //выкавыриваем старший полубайт из команды
+	LCM_OUT_B &= ~(LCM_PIN_MASK_B);               //и расставляем биты на нужных ножках
+	LCM_OUT_A |= ((ByteToSend & 0x10)) << 8;
+	LCM_OUT_A |= ((ByteToSend & 0x20)) << 10;
+	LCM_OUT_B |= ((ByteToSend & 0xC0)) >> 3;
+	if (IsData == 1){           //если команда то надо установить бит RS
+		LCM_OUT_A |= LCM_PIN_RS;
+		delay_us(4);
+	}
+	else{
+		LCM_OUT_A &= ~LCM_PIN_RS; //если информация то наоборот снять
+		delay_us(4);
+	}
+	PulseLCD_1();                 //отправляем старший полубайт
+	delay_us(5);
+	
+	LCM_OUT_A &= ~(LCM_PIN_MASK_A);           //выкавыриваем младший полубайт
+	LCM_OUT_B &= ~(LCM_PIN_MASK_B);           //также расставлем биты по своим
+	LCM_OUT_A |= ((ByteToSend & 0x1)) << 12;  //позициям
+	LCM_OUT_A |= ((ByteToSend & 0x2)) << 14;
+	LCM_OUT_B |= ((ByteToSend & 0xC)) << 1;
+	if (IsData == 1){           //если команда то надо установить бит RS
+		LCM_OUT_A |= LCM_PIN_RS;
+		delay_us(4);
+	}
+	else{
+		LCM_OUT_A &= ~LCM_PIN_RS; //если информация то наоборот снять
+		delay_us(4);
+	}
+	PulseLCD_1();                     //отправляем младший полубайт
+	delay_ms(5);
+	
+	LCM_OUT_A &= ~(LCM_PIN_MASK_A); //зачищаем используемые ноги
+	LCM_OUT_B &= ~(LCM_PIN_MASK_B); //на обоих портах
+}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //---Инициализация дисплея---//
 void LCD_Init(void)
 {
@@ -136,44 +184,45 @@ void LCD_Init(void)
 	LCM_OUT_A &= ~LCM_PIN_EN;
 	LCM_OUT_A |= 0x9000;
 	LCM_OUT_B |= 0x0000;
-	PulseLCD();
+	PulseLCD_1();
 	delay_ms(5);
-	PulseLCD();
+	PulseLCD_1();
 	delay_ms(5);
 	LCM_OUT_A &= ~(LCM_PIN_MASK_A);
 	LCM_OUT_B &= ~(LCM_PIN_MASK_B);
 	
 	LCM_OUT_A |= 0x8000;       //отправка 0010 (4битный интерфейс), несколько раз
 	LCM_OUT_B |= 0x000;
-	PulseLCD();
+	PulseLCD_1();
 	delay_us(10);
 	
 	LCM_OUT_A &= ~(LCM_PIN_MASK_A);
 	LCM_OUT_B &= ~(LCM_PIN_MASK_B);
 	LCM_OUT_A |= 0x8000;       //отправка 0010 (4битный интерфейс), несколько раз
 	LCM_OUT_B |= 0x000;
-	PulseLCD();
+	PulseLCD_1();
 	delay_ms(5);
 	LCM_OUT_A &= ~(LCM_PIN_MASK_A);
 	LCM_OUT_B &= ~(LCM_PIN_MASK_B);
 	
-	SendByte(0x28, 0);      //101000 еще раз про интерфес + две строки + размер шрифта
-	SendByte(0x06, 0);      //110 вывод символов слева-направо, инкремент указателя памяти + запрет сдвига экрана
-	SendByte(0x14, 0);      //10100 сдвигаем курсор, а не экран + сдвигаем курсор влево
-	SendByte(0x0C, 0);      //1100 экран включен + курсор выключен + курсор не мигает
+	SendByte_1(0x28, 0);      //101000 еще раз про интерфес + две строки + размер шрифта
+	SendByte_1(0x06, 0);      //110 вывод символов слева-направо, инкремент указателя памяти + запрет сдвига экрана
+	SendByte_1(0x14, 0);      //10100 сдвигаем курсор, а не экран + сдвигаем курсор влево
+	SendByte_1(0x0C, 0);      //1100 экран включен + курсор выключен + курсор не мигает
 }
  
 //---Печать строки---//
 void PrintStr(char *Text)
 {	
 	char *c = Text;
-	while ((c != 0) && (*c != 0))    //перебираем символы из текста
+	while ((c != 0) && (*c != 0) && (*c != 0x0A))    //перебираем символы из текста
 	{
-		char * y = strncpy( y, c, 2);  //проверяем не русский ли символ
-		if( y){
+		char y[2];
+		strncpy( y, c, 2);  //проверяем не русский ли символ
+		if(y){
 			if(strstr(rus, y)){          //если русский, то кодировку берем из массива
 				SendByte(RUS[abs(rus - strstr(rus, y)) / 2], 1);
-				c+=2; //*кейл кодирует кириллицу двумя байтами
+				c += 2; //*кейл кодирует кириллицу двумя байтами
 			}
 			else 
 			{
@@ -181,15 +230,24 @@ void PrintStr(char *Text)
 				c+=1;
 			}
 		}
+		taskYIELD();
 	}
 }
 //---Печать переменной---//
 void PrintVar(int y)
 {	
-	char str[16];              //переводим число в строку
-	sprintf (str, "%d", y);
-	char *c = str;
-	PrintStr(c);               //и отправляем уже как строку
+	//int x = 3;
+	//if(y > 0){
+	//	x = x + (int)log10(y);
+	//}
+	//char * str = malloc(x * sizeof(char));              //переводим число в строку
+	//char * u = "" + y;
+	char str[8];
+	sprintf (str, "%i", y);
+	//char * c;
+	//strcpy(c, str);
+	
+	PrintStr(str);     //и отправляем уже как строку
 }
 //---Зачистка куска дисплея---//
 void Cleaning (int row, int col, int number)
@@ -197,5 +255,6 @@ void Cleaning (int row, int col, int number)
 	Cursor(row, col);
 	for(int i = 0; i < number; i++){
 		SendByte(' ', 1);
+		taskYIELD();
 	}
 }

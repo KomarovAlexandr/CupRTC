@@ -3,6 +3,9 @@
 #define FRAME_SIZE             160
 #define ENCODED_FRAME_SIZE      20
 
+extern xSemaphoreHandle led;
+extern xSemaphoreHandle lcd;
+
 volatile int16_t OUT_Buffer[2][FRAME_SIZE];
 volatile int16_t *outBuffer;
 
@@ -19,7 +22,7 @@ void Speex_Init(void)
 	outBuffer = OUT_Buffer[0];
 	spi_init();
 }
-/*
+
 void play_message(unsigned char const *array, uint16_t frame_number)
 {
 	char input_bytes[ENCODED_FRAME_SIZE];
@@ -72,6 +75,7 @@ void play_message(unsigned char const *array, uint16_t frame_number)
 			Start_Decoding = 0;
 			NB_Frames++;
 		}
+		taskYIELD();
 	}
 	
 	TIM_Cmd(TIM2, DISABLE);
@@ -80,11 +84,13 @@ void play_message(unsigned char const *array, uint16_t frame_number)
 	NB_Frames = 0;
 	outBuffer = OUT_Buffer[0];
 }
-*/
+
+extern TaskHandle_t xHandleLED;
+extern TaskHandle_t xHandleLCD;
 
 void play_message_from_eeprom(uint16_t address, uint16_t frame_number){
-	char input_bytes[ENCODED_FRAME_SIZE];
 	volatile uint16_t NB_Frames=0;
+	char input_bytes[ENCODED_FRAME_SIZE];
 	eeprom_read_buffer((uint8_t *)input_bytes, 20, address);
 	address += 20;
 	speex_bits_read_from(&bits, input_bytes, ENCODED_FRAME_SIZE);
@@ -98,6 +104,7 @@ void play_message_from_eeprom(uint16_t address, uint16_t frame_number){
 	
 	TIM_Cmd(TIM2, ENABLE);
 	NVIC_EnableIRQ(TIM2_IRQn);
+
 	while(NB_Frames < frame_number)
 	{
 		if(Start_Decoding == 1)
@@ -118,9 +125,12 @@ void play_message_from_eeprom(uint16_t address, uint16_t frame_number){
 			Start_Decoding = 0;
 			NB_Frames++;
 		}
+		taskYIELD();
 	}
+	taskYIELD();
 	NVIC_DisableIRQ(TIM2_IRQn);
 	TIM_Cmd(TIM2, DISABLE);
 	NB_Frames = 0;
 	outBuffer = OUT_Buffer[0];
+	taskYIELD();
 }
