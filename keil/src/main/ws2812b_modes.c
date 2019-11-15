@@ -39,6 +39,7 @@ void Mode_1(void){
 	while(!ws2812b_is_ready());
 	ws2812b_send();
 	if(H >= 360) H = 0;
+	osDelay(15);
 }
 
 //---Доп функция для режима 2---//

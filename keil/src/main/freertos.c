@@ -3,6 +3,7 @@
 void StartRGBws2812bTask(void const * argument);
 void StartButtonTask(void const * argument);
 void StartLCDTask(void const * argument);
+void ChangeLedMode(void const * argument);
 
 xSemaphoreHandle led;
 xSemaphoreHandle lcd;
@@ -35,6 +36,15 @@ void freertos_init(void){
 	xTaskCreate( (TaskFunction_t) StartButtonTask, "StartButtonTask", 128, NULL, 85, NULL);
 	xTaskCreate( (TaskFunction_t) StartRGBws2812bTask, "StartRGBws2812bTask", 128, NULL, 85, NULL);
 	xTaskCreate( (TaskFunction_t) StartLCDTask, "StartLCDTask", 128, NULL, 85, NULL);
+	xTaskCreate( (TaskFunction_t) ChangeLedMode, "ChangeLedMode", 128, NULL, 85, NULL);
+}
+
+void ChangeLedMode(void const * argument){
+	while(1){
+		Led_mode++;
+		if(Led_mode > 2) Led_mode = 0;
+		osDelay(60000);
+	}
 }
 
 void StartLCDTask(void const * argument)
@@ -73,7 +83,7 @@ void StartLCDTask(void const * argument)
 			if(page > 4) page = 1;
 			xSemaphoreGive(lcd);
 		}
-		osDelay(5000);
+		osDelay(10000);
 		taskYIELD();
 	}
 }
@@ -108,7 +118,7 @@ void StartRGBws2812bTask(void const * argument)
 			Turn_on_Led_mode(Led_mode);
 			xSemaphoreGive(led);
 		}
-		osDelay(10);
+		osDelay(5);
 		taskYIELD();
 	}
 }
